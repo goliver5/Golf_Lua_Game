@@ -40,8 +40,8 @@ int main()
 	bool running = true;
 	while (running)
 	{
-		//UpdateGame
-		//RenderGame
+		//Update Game
+		//Render Game
 		//std::cout << "Wassup" << std::endl;
 	}
 
