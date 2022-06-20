@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32228.343
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Golf_Game_Application", "Golf_Game_Application\Golf_Game_Application.vcxproj", "{4B4ECE37-D3E1-4223-B7E5-55623C6F185D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{73FE6394-43C6-4B56-8EEC-01F99D5313A6} = {73FE6394-43C6-4B56-8EEC-01F99D5313A6}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LuaLib", "LuaLib\LuaLib.vcxproj", "{73FE6394-43C6-4B56-8EEC-01F99D5313A6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4B4ECE37-D3E1-4223-B7E5-55623C6F185D}.Debug|x64.ActiveCfg = Debug|x64
+		{4B4ECE37-D3E1-4223-B7E5-55623C6F185D}.Debug|x64.Build.0 = Debug|x64
+		{4B4ECE37-D3E1-4223-B7E5-55623C6F185D}.Debug|x86.ActiveCfg = Debug|Win32
+		{4B4ECE37-D3E1-4223-B7E5-55623C6F185D}.Debug|x86.Build.0 = Debug|Win32
+		{4B4ECE37-D3E1-4223-B7E5-55623C6F185D}.Release|x64.ActiveCfg = Release|x64
+		{4B4ECE37-D3E1-4223-B7E5-55623C6F185D}.Release|x64.Build.0 = Release|x64
+		{4B4ECE37-D3E1-4223-B7E5-55623C6F185D}.Release|x86.ActiveCfg = Release|Win32
+		{4B4ECE37-D3E1-4223-B7E5-55623C6F185D}.Release|x86.Build.0 = Release|Win32
+		{73FE6394-43C6-4B56-8EEC-01F99D5313A6}.Debug|x64.ActiveCfg = Debug|x64
+		{73FE6394-43C6-4B56-8EEC-01F99D5313A6}.Debug|x64.Build.0 = Debug|x64
+		{73FE6394-43C6-4B56-8EEC-01F99D5313A6}.Debug|x86.ActiveCfg = Debug|Win32
+		{73FE6394-43C6-4B56-8EEC-01F99D5313A6}.Debug|x86.Build.0 = Debug|Win32
+		{73FE6394-43C6-4B56-8EEC-01F99D5313A6}.Release|x64.ActiveCfg = Release|x64
+		{73FE6394-43C6-4B56-8EEC-01F99D5313A6}.Release|x64.Build.0 = Release|x64
+		{73FE6394-43C6-4B56-8EEC-01F99D5313A6}.Release|x86.ActiveCfg = Release|Win32
+		{73FE6394-43C6-4B56-8EEC-01F99D5313A6}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4F3F6D33-653A-4AA8-A6CD-BCF6C5F225F2}
+	EndGlobalSection
+EndGlobal
