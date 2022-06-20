@@ -42,7 +42,7 @@ int main()
 	{
 		//Update Game
 		//Render Game
-		//std::cout << "Wassup" << std::endl;
+		std::cout << "[C++] Update" << std::endl;
 	}
 
 	std::cout << "Hello world!\n";
