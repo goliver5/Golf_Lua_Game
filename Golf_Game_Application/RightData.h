@@ -2,5 +2,5 @@
 
 struct rightData
 {
-	int speedX = 1;
+	int speedX = 4;
 };
