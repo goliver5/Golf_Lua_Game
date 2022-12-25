@@ -6,6 +6,7 @@ Menu::Menu()
 	InitWindow(screenWidth, screenHeight, "Golf Game");
 	SetTargetFPS(144);
 
+	std::cout << "\n----------------------------\nLua console:\n\n";
 	ballPosition = { (float)800 / 2, (float)450 / 2 };
 }
 
