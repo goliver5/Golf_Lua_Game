@@ -11,6 +11,9 @@
 #include "Menu.h"
 #include "Game.h"
 #include "EndScreen.h"
+#include "RightSystem.hpp"
+#include "Position.h"
+#include "RightData.h"
 
 
 void DumpError(lua_State* L)
@@ -45,8 +48,22 @@ int main()
 
 	std::thread consoleThread(ConsoleThreadFunction, L);
 
+
 	State* state = new Menu();
 	CURRENTSTATE currentState = CURRENTSTATE::NOCHANGE;
+
+	entt::registry registry;
+
+	entt::entity entity = registry.create();
+
+	registry.emplace<Position>(entity, 100, 100, 100);
+	registry.emplace<rightData>(entity);
+
+	System* rSus = new RightSystem(20);
+
+	rSus->OnUpdate(registry, 0.2f);
+
+
 
 	while (state != nullptr)
 	{
@@ -128,7 +145,7 @@ int main()
 	//	std::cout << "Position: " << position.Y << std::endl;
 	//	std::getchar();
 	//}
-	
+	//
 
 	//std::cout << "Count: " << count << std::endl;
 	return 0;

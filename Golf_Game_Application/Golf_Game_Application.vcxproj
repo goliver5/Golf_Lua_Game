@@ -168,13 +168,20 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="RightSystem.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="State.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EndScreen.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="Position.h" />
+    <ClInclude Include="RightData.h" />
+    <ClInclude Include="RightSystem.hpp" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="State.h" />
+    <ClInclude Include="System.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

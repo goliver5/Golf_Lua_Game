@@ -15,13 +15,13 @@ public:
 	~Scene();
 
 
-private:
+public:
 	//C++ Functions
 	static int createEntity();
 
-	//Lua Functions
-	static Scene* lua_GetScene(lua_State* L);
+	////Lua Functions
+	//static Scene* lua_GetScene(lua_State* L);
 
-	static int lua_createEntity(lua_State* L);
+	//static int lua_createEntity(lua_State* L);
 
 };
