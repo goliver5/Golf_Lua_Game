@@ -14,6 +14,7 @@
 #include "RightSystem.hpp"
 #include "Position.h"
 #include "RightData.h"
+#include "Scene.h"
 
 
 void DumpError(lua_State* L)
@@ -52,16 +53,24 @@ int main()
 	State* state = new Menu();
 	CURRENTSTATE currentState = CURRENTSTATE::NOCHANGE;
 
-	entt::registry registry;
+	Scene scene(L);
+	scene.CreateEntity();
 
-	entt::entity entity = registry.create();
+	Position p(0,0,0);
+	rightData r;
 
-	registry.emplace<Position>(entity, 100, 100, 100);
-	registry.emplace<rightData>(entity);
+	scene.SetComponent<Position>(0, p);
 
-	System* rSus = new RightSystem(20);
+	//entt::registry registry;
 
-	rSus->OnUpdate(registry, 0.2f);
+	//entt::entity entity = registry.create();
+
+	//registry.emplace<Position>(entity, 100, 100, 100);
+	//registry.emplace<rightData>(entity);
+
+	//System* rSus = new RightSystem(20);
+
+	//rSus->OnUpdate(registry, 0.2f);
 
 
 

@@ -9,9 +9,24 @@ Scene::~Scene()
 {
 }
 
-int Scene::createEntity()
+int Scene::GetEntityCount()
 {
-	return 0;
+	return registry.alive();
+}
+
+int Scene::CreateEntity()
+{
+	return (int)registry.create();
+}
+
+bool Scene::IsEntity(int entity)
+{
+	return registry.valid((entt::entity)entity);
+}
+
+void Scene::RemoveEntity(int entity)
+{
+	registry.destroy((entt::entity)entity);
 }
 
 //Scene* Scene::lua_GetScene(lua_State* L)
