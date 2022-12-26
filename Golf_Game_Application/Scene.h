@@ -1,5 +1,5 @@
 #pragma once
-#include "lua.h"
+#include "lua.hpp"
 #include "entt/entt.hpp"
 #include "System.h"
 
@@ -14,7 +14,6 @@ public:
 
 	Scene(lua_State* L);
 	~Scene();
-
 
 public:
 	//C++ Functions
@@ -45,10 +44,25 @@ public:
 	template <typename T>
 	void RemoveComponent(int entity);
 
-	////Lua Functions
-	//static Scene* lua_GetScene(lua_State* L);
 
-	//static int lua_createEntity(lua_State* L);
+
+
+	//Lua Functions
+public:
+	static void lua_openscene(lua_State* L, Scene* scene);
+
+private:
+	static Scene* lua_GetSceneUpValue(lua_State* L);
+
+	static int lua_GetEntityCount(lua_State* L);
+	static int lua_CreateEntity(lua_State* L);
+	static int lua_IsEntity(lua_State* L);
+	static int lua_RemoveEntity(lua_State* L);
+
+	static int lua_HasComponent(lua_State* L);
+	static int lua_GetComponent(lua_State* L);
+	static int lua_SetComponent(lua_State* L);
+	static int lua_RemoveComponent(lua_State* L);
 
 };
 
@@ -71,7 +85,7 @@ inline void Scene::SetComponent(int entity, const T& component)
 }
 
 template<typename T, typename ...Args>
-inline void Scene::SetComponent(int entity, Args ...args)
+inline void Scene::SetComponent(int entity, Args... args)
 {
 	T& comp = registry.emplace_or_replace<T>((entt::entity)entity, args...);
 }
