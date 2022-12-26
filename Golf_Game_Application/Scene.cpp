@@ -116,8 +116,8 @@ int Scene::lua_HasComponent(lua_State* L)
 	int entity = lua_tointeger(L, 1);
 	std::string type = lua_tostring(L, 2);
 	bool hasComponent = false;
-	//if (type == "position") 
-	//	hasComponent = scene->HasComponents<Position>(entity);
+	if (type == "position") 
+		hasComponent = scene->HasComponents<Position>(entity);
 	//else if (type == "component2") {
 	//	hasComponent =
 	//		scene->HasComponents<component2>(entity);
@@ -131,10 +131,10 @@ int Scene::lua_GetComponent(lua_State* L)
 	Scene* scene = lua_GetSceneUpValue(L);
 	int entity = lua_tointeger(L, 1);
 	std::string type = lua_tostring(L, 2);
-	if (type == "position")// && scene->HasComponents<Position>(entity)) 
+	if (type == "position" && scene->HasComponents<Position>(entity)) 
 	{
-		//Position& behaviour = scene->GetComponent<Position>(entity);
-		//lua_pushposition(L, behaviour);
+		Position& position = scene->GetComponent<Position>(entity);
+		//lua_pushposition(L, position);
 		return 1;
 	}
 	//else if (type == "component2" &&
