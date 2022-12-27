@@ -1,5 +1,6 @@
 #pragma once
 #include "entt/entt.hpp"
+#include "lua.hpp"
 
 class System
 {

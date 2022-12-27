@@ -6,7 +6,7 @@ Scene::Scene(lua_State* L)
 {
 	this->luaState = L;
 
-	//m_systems.push_back(new Position("golf.lua",))
+	m_systems.push_back(new RightSystem(L));
 }
 
 Scene::~Scene()
@@ -49,6 +49,23 @@ void Scene::RemoveEntity(int entity)
 //	int entityID = scene->createEntity();
 //	return 0;
 //}
+
+void Scene::UpdateSystems(float delta)
+{
+	for (auto it = m_systems.begin();
+		it != m_systems.end();)
+	{
+		if ((*it)->OnUpdate(registry, delta))
+		{
+			delete (*it);
+			it = m_systems.erase(it);
+		}
+		else
+		{
+			it++;
+		}
+	}
+}
 
 void Scene::lua_openscene(lua_State* L, Scene* scene)
 {
@@ -138,7 +155,7 @@ int Scene::lua_GetComponent(lua_State* L)
 	if (type == "position" && scene->HasComponents<Position>(entity)) 
 	{
 		Position& position = scene->GetComponent<Position>(entity);
-		//lua_pushposition(L, position);
+		lua_pushposition(L, position);
 		return 1;
 	}
 	//else if (type == "component2" &&
@@ -156,11 +173,39 @@ int Scene::lua_SetComponent(lua_State* L)
 	Scene* scene = lua_GetSceneUpValue(L);
 	int entity = lua_tointeger(L, 1);
 	std::string type = lua_tostring(L, 2);
-	if (type == "position")
+	if (type == "creation")
 	{
-		Position value(type.c_str(), entity, 0, 0, 0);
-		value.posX = lua_tonumber(L, 3);
-		scene->SetComponent<Position>(entity, value);
+		if (scene->HasComponents<Position>(entity))
+		{
+			std::cout << "LKLLKOI\n";
+			scene->RemoveComponent<Position>(entity);
+		}
+		std::cout << "HFUIAWDHIUDBNAWUDIAWBDUIWADBU\n";
+		//Position value(type.c_str(), entity, 69, 420, 1337);
+		//value.posX = lua_tonumber(L, 3);
+
+
+
+		const char* path = lua_tostring(L, 3);
+		int ref = RefAndPushBehaviour(L, entity, path);
+		//scene->SetComponent<Position>(entity, value);
+		scene->SetComponent<Position>(entity, path, ref, 69, 420, 1337);
+		return 1;
+	}
+
+	else if (type == "position")
+	{
+
+		if (scene->HasComponents<Position>(entity))
+		{
+			scene->RemoveComponent<Position>(entity);
+		}
+		//Position value = lua_position(L, "golfball.lua", 3);// (type.c_str(), entity, 69, 420, 1337);
+		//value.posX = lua_tonumber(L, 3);
+
+		
+		scene->SetComponent<Position>(entity, lua_position(L, "golfball.lua", 3, entity));
+		return 1;
 	}
 	//else if (type == "component2")
 	//{
@@ -180,4 +225,25 @@ int Scene::lua_RemoveComponent(lua_State* L)
 	//else if (type == "component2")
 	//	scene->RemoveComponent<component2>(entity);
 	return 0;
+}
+
+int Scene::RefAndPushBehaviour(lua_State* L, int entity, const char* path)
+{
+	std::cout << path << "\n";
+	luaL_dofile(L, path);
+	
+	lua_pushvalue(L, -1);
+	int luaTableRef = luaL_ref(L, LUA_REGISTRYINDEX);
+
+	lua_pushinteger(L, entity);
+	lua_setfield(L, -2, "ID");
+
+	lua_pushstring(L, path);
+	lua_setfield(L, -2, "path");
+
+	lua_getfield(L, -1, "OnCreate");
+	lua_pushvalue(L, -2);
+	lua_pcall(L, 1, 0, 0);
+
+	return luaTableRef;
 }

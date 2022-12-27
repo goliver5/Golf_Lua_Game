@@ -55,6 +55,8 @@ int main()
 
 	Scene scene(L);
 	scene.lua_openscene(L, &scene);
+
+	luaL_dofile(L, "test.lua");
 	/*scene.CreateEntity();
 
 	Position p("uwu", 3, 0,0,0);
@@ -77,6 +79,7 @@ int main()
 
 	while (state != nullptr)
 	{
+		scene.UpdateSystems(1);
 		switch (currentState)
 		{
 		case CURRENTSTATE::NOCHANGE:

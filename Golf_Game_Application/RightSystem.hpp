@@ -4,10 +4,10 @@
 class RightSystem : public System
 {
 private:
-	int speed;
+	lua_State* L;
 
 public:
-	RightSystem(int speed);
+	RightSystem(lua_State* L);
 
 
 

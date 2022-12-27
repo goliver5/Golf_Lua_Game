@@ -2,6 +2,7 @@
 #include "lua.hpp"
 #include "entt/entt.hpp"
 #include "System.h"
+#include "RightSystem.hpp"
 
 class Scene
 {
@@ -45,7 +46,7 @@ public:
 	void RemoveComponent(int entity);
 
 
-
+	void UpdateSystems(float delta);
 
 	//Lua Functions
 public:
@@ -64,6 +65,7 @@ private:
 	static int lua_SetComponent(lua_State* L);
 	static int lua_RemoveComponent(lua_State* L);
 
+	static int RefAndPushBehaviour(lua_State* L, int entity, const char* path);
 };
 
 template<typename ...Args>
