@@ -7,7 +7,7 @@ class Scene
 {
 	entt::registry registry;
 	lua_State* luaState;
-	std::vector<System*> systems;
+	std::vector<System*> m_systems;
 
 
 public:

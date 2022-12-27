@@ -1,9 +1,12 @@
 #include "Scene.h"
 #include "Position.h"
+#include <iostream>
 
 Scene::Scene(lua_State* L)
 {
 	this->luaState = L;
+
+	//m_systems.push_back(new Position("golf.lua",))
 }
 
 Scene::~Scene()
@@ -90,6 +93,7 @@ int Scene::lua_CreateEntity(lua_State* L)
 	Scene* scene = lua_GetSceneUpValue(L);
 	int entity = scene->CreateEntity();
 	lua_pushinteger(L, entity);
+	std::cout << "Created Entity: " << entity << std::endl;
 	return 1;
 }
 
@@ -154,7 +158,7 @@ int Scene::lua_SetComponent(lua_State* L)
 	std::string type = lua_tostring(L, 2);
 	if (type == "position")
 	{
-		Position value(0, 0, 0);
+		Position value(type.c_str(), entity, 0, 0, 0);
 		value.posX = lua_tonumber(L, 3);
 		scene->SetComponent<Position>(entity, value);
 	}

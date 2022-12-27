@@ -54,12 +54,13 @@ int main()
 	CURRENTSTATE currentState = CURRENTSTATE::NOCHANGE;
 
 	Scene scene(L);
-	scene.CreateEntity();
+	scene.lua_openscene(L, &scene);
+	/*scene.CreateEntity();
 
-	Position p(0,0,0);
+	Position p("uwu", 3, 0,0,0);
 	rightData r;
 
-	scene.SetComponent<Position>(0, p);
+	scene.SetComponent<Position>(0, p);*/
 
 	//entt::registry registry;
 
