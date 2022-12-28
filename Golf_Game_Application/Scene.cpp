@@ -7,6 +7,7 @@ Scene::Scene(lua_State* L)
 	this->luaState = L;
 
 	m_systems.push_back(new RightSystem(L));
+	m_systems.push_back(new RenderSystem(L));
 }
 
 Scene::~Scene()
@@ -139,10 +140,10 @@ int Scene::lua_HasComponent(lua_State* L)
 	bool hasComponent = false;
 	if (type == "position") 
 		hasComponent = scene->HasComponents<Position>(entity);
-	//else if (type == "component2") {
-	//	hasComponent =
-	//		scene->HasComponents<component2>(entity);
-	//}
+	else if (type == "mesh") {
+		hasComponent =
+			scene->HasComponents<MeshComponent>(entity);
+	}
 	lua_pushboolean(L, hasComponent);
 	return 1;
 }
@@ -158,12 +159,11 @@ int Scene::lua_GetComponent(lua_State* L)
 		lua_pushposition(L, position);
 		return 1;
 	}
-	//else if (type == "component2" &&
-	//	scene->HasComponents<component2>(entity)) {
-	//	component2& temp = scene->GetComponent<component2>(entity);
-	//	lua_pushtemp(L, transform);
-	//	return 1;
-	//}
+	else if (type == "mesh" &&
+		scene->HasComponents<MeshComponent>(entity)) {
+		MeshComponent& temp = scene->GetComponent<MeshComponent>(entity);
+		return 1;
+	}
 	lua_pushnil(L);
 	return 1;
 }
@@ -189,7 +189,7 @@ int Scene::lua_SetComponent(lua_State* L)
 		const char* path = lua_tostring(L, 3);
 		int ref = RefAndPushBehaviour(L, entity, path);
 		//scene->SetComponent<Position>(entity, value);
-		scene->SetComponent<Position>(entity, path, ref, 69, 420, 1337);
+		scene->SetComponent<Position>(entity, path, ref, 69.f, 420.f, 10.f, 0.f);
 		return 1;
 	}
 
@@ -207,6 +207,18 @@ int Scene::lua_SetComponent(lua_State* L)
 		scene->SetComponent<Position>(entity, lua_position(L, "golfball.lua", 3, entity));
 		return 1;
 	}
+
+	else if (type == "mesh")
+	{
+		if (scene->HasComponents<MeshComponent>(entity))
+		{
+			scene->RemoveComponent<MeshComponent>(entity);
+		}
+
+		scene->SetComponent<MeshComponent>(entity, 0);
+		return 1;
+	}
+
 	//else if (type == "component2")
 	//{
 	//	float temp = lua_tonumber(L, 3);
@@ -222,8 +234,8 @@ int Scene::lua_RemoveComponent(lua_State* L)
 	std::string type = lua_tostring(L, 2);
 	if (type == "position")
 		scene->RemoveComponent<Position>(entity);
-	//else if (type == "component2")
-	//	scene->RemoveComponent<component2>(entity);
+	else if (type == "mesh")
+		scene->RemoveComponent<MeshComponent>(entity);
 	return 0;
 }
 

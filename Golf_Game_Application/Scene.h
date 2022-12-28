@@ -3,6 +3,7 @@
 #include "entt/entt.hpp"
 #include "System.h"
 #include "RightSystem.hpp"
+#include "RenderSystem.h"
 
 class Scene
 {

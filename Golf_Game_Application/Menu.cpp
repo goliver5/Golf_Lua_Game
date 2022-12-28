@@ -26,14 +26,14 @@ CURRENTSTATE Menu::update()
 
 void Menu::render()
 {
-	BeginDrawing();
-
-	ClearBackground(RAYWHITE);
-
-	DrawText("move the ball to Play Game and press A", 10, 10, 20, DARKGRAY);
-	DrawText("Play game", screenWidth/2-40, screenHeight/4-5, 20, DARKGRAY);
-
-	DrawCircleV(ballPosition, 10, MAROON);
-
-	EndDrawing();
+	//BeginDrawing();
+	//
+	//ClearBackground(RAYWHITE);
+	//
+	//DrawText("move the ball to Play Game and press A", 10, 10, 20, DARKGRAY);
+	//DrawText("Play game", screenWidth/2-40, screenHeight/4-5, 20, DARKGRAY);
+	//
+	//DrawCircleV(ballPosition, 10, MAROON);
+	//
+	//EndDrawing();
 }

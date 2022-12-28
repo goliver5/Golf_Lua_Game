@@ -168,6 +168,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="RightSystem.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="State.cpp" />
@@ -176,7 +177,9 @@
     <ClInclude Include="EndScreen.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="MeshComponent.h" />
     <ClInclude Include="Position.h" />
+    <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="RightData.h" />
     <ClInclude Include="RightSystem.hpp" />
     <ClInclude Include="Scene.h" />

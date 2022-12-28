@@ -79,7 +79,7 @@ int main()
 
 	while (state != nullptr)
 	{
-		scene.UpdateSystems(1);
+		scene.UpdateSystems(1.f/144.f);
 		switch (currentState)
 		{
 		case CURRENTSTATE::NOCHANGE:
