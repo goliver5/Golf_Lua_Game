@@ -164,6 +164,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CollsionSystem.cpp" />
     <ClCompile Include="EndScreen.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
@@ -174,8 +175,11 @@
     <ClCompile Include="State.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CollisionComponent.h" />
+    <ClInclude Include="CollsionSystem.h" />
     <ClInclude Include="EndScreen.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="LuaExtraFunctions.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MeshComponent.h" />
     <ClInclude Include="Position.h" />
