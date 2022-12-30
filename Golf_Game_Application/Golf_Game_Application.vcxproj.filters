@@ -86,5 +86,8 @@
     <ClInclude Include="LuaExtraFunctions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MoveScript.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

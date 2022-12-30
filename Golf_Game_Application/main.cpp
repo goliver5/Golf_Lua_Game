@@ -56,7 +56,7 @@ int main()
 	Scene scene(L);
 	scene.lua_openscene(L, &scene);
 
-	luaL_dofile(L, "test.lua");
+	if (luaL_dofile(L, "test.lua")) std::cout << "WRONG\n";
 	/*scene.CreateEntity();
 
 	Position p("uwu", 3, 0,0,0);

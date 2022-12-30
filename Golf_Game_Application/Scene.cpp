@@ -2,6 +2,7 @@
 #include "Position.h"
 #include "VelocityData.h"
 #include <iostream>
+#include "MoveScript.h"
 
 Scene::Scene(lua_State* L)
 {
@@ -177,6 +178,14 @@ int Scene::lua_HasComponent(lua_State* L)
 		hasComponent =
 			scene->HasComponents<MeshComponent>(entity);
 	}
+	else if (type == "velocity") {
+		hasComponent =
+			scene->HasComponents<VelocityData>(entity);
+	}
+	else if (type == "moveScript") {
+		hasComponent =
+			scene->HasComponents<MoveScript>(entity);
+	}
 	lua_pushboolean(L, hasComponent);
 	return 1;
 }
@@ -210,7 +219,7 @@ int Scene::lua_GetComponent(lua_State* L)
 int Scene::lua_SetComponent(lua_State* L)
 {
 	Scene* scene = lua_GetSceneUpValue(L);
-	int entity = lua_tointeger(L, 1);
+	int entity = (int)lua_tointeger(L, 1);
 	std::string type = lua_tostring(L, 2);
 	if (type == "createPlayer")//creates player
 	{
@@ -240,12 +249,17 @@ int Scene::lua_SetComponent(lua_State* L)
 		if (scene->HasComponents<Position>(entity))
 		{
 			scene->RemoveComponent<Position>(entity);
+			//scene->StackDump(L);
+			scene->SetComponent<Position>(entity, lua_position(L, 3));
+		}
+		else
+		{
+			scene->SetComponent<Position>(entity, 400.f, 300.f);
 		}
 		//Position value = lua_position(L, "golfball.lua", 3);// (type.c_str(), entity, 69, 420, 1337);
 		//value.posX = lua_tonumber(L, 3);
-
 		
-		scene->SetComponent<Position>(entity, lua_position(L, "golfball.lua", 3, entity));
+		
 		return 1;
 	}
 
@@ -255,23 +269,36 @@ int Scene::lua_SetComponent(lua_State* L)
 		{
 			scene->RemoveComponent<MeshComponent>(entity);
 		}
-
+		std::cout << "LIGAM\n";
 		scene->SetComponent<MeshComponent>(entity, 0);
 		return 1;
 	}
 	else if (type == "velocity")
 	{
+
 		if (scene->HasComponents<VelocityData>(entity))
 		{
 			scene->RemoveComponent<VelocityData>(entity);
-			scene->SetComponent<VelocityData>(entity, lua_getvelocitydata(L, ));
+			scene->SetComponent<VelocityData>(entity, lua_getvelocitydata(L, 3));
+
 		}
 		else
 		{
-			scene->SetComponent<VelocityData>(entity, "golfball.lua", 1, 10.f, 0.f);
+			scene->SetComponent<VelocityData>(entity, 10.f, 10.f);
 		}
 
-		scene->SetComponent<VelocityData>(entity, "golfball.lua", 1, 10.f, 0.f);
+		return 1;
+	}
+	else if (type == "moveScript")
+	{
+		if (scene->HasComponents<MoveScript>(entity))
+		{
+			scene->RemoveComponent<MoveScript>(entity);
+		}
+		//const char* path = lua_tostring(L, 3);
+		int luaRef = RefAndPushBehaviour(L, entity, "golfball.lua");
+		scene->SetComponent<MoveScript>(entity, "golfball.lua", luaRef, entity);
+
 		return 1;
 	}
 
@@ -292,6 +319,10 @@ int Scene::lua_RemoveComponent(lua_State* L)
 		scene->RemoveComponent<Position>(entity);
 	else if (type == "mesh")
 		scene->RemoveComponent<MeshComponent>(entity);
+	else if (type == "velocity")
+		scene->RemoveComponent<VelocityData>(entity);
+	else if (type == "moveScript")
+		scene->RemoveComponent<MoveScript>(entity);
 	return 0;
 }
 
@@ -304,21 +335,10 @@ int Scene::lua_StackDump(lua_State* L)
 
 int Scene::RefAndPushBehaviour(lua_State* L, int entity, const char* path)
 {
-	std::cout << path << "\n";
-	luaL_dofile(L, path);
+	if (luaL_dofile(L, path)) std::cout << "ERROR REF AND PUSH\n";
 	
 	lua_pushvalue(L, -1);
 	int luaTableRef = luaL_ref(L, LUA_REGISTRYINDEX);
-
-	lua_pushinteger(L, entity);
-	lua_setfield(L, -2, "ID");
-
-	lua_pushstring(L, path);
-	lua_setfield(L, -2, "path");
-
-	lua_getfield(L, -1, "OnCreate");
-	lua_pushvalue(L, -2);
-	lua_pcall(L, 1, 0, 0);
 
 	return luaTableRef;
 }

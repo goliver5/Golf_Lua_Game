@@ -35,7 +35,7 @@ static void lua_pushposition(lua_State* L, Position& position)
 	//lua_setfield(L, -2, "velocityY");
 }
 
-static Position lua_position(lua_State* L, const char* path, int ref, int entity)
+static Position lua_position(lua_State* L, int ref)
 {
 	Position pos;
 

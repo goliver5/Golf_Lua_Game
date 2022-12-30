@@ -3,38 +3,25 @@
 
 struct VelocityData
 {
-	char ScriptPath[64];
-	int LuaTableRef;
-
 	float velocityX = 0;
 	float velocityY = 0;
 
-	VelocityData(const char* path, int luaRef, float velocityX = 0, float velocityY = 0)
-		:LuaTableRef(luaRef)
+	VelocityData(float velocityX = 0, float velocityY = 0)
+		:velocityX(velocityX), velocityY(velocityY)
 	{
-		memset(ScriptPath, '\0', sizeof(ScriptPath));
-		strcpy_s(ScriptPath, path);
 	}
 
 };
 
-static VelocityData lua_getvelocitydata(lua_State* L, int luaTableRef)
+static VelocityData lua_getvelocitydata(lua_State* L, int i)
 {
-	VelocityData velData("golfball.lua", luaTableRef);
+	VelocityData velData;
 
-	lua_getfield(L, velData.LuaTableRef, "path");
-	strcpy_s(velData.ScriptPath ,lua_tostring(L, -1));
-	lua_pop(L, 1);
-	
-	lua_getfield(L, velData.LuaTableRef, "ref");
-	velData.LuaTableRef = lua_tonumber(L, -1);
-	lua_pop(L, 1);
-
-	lua_getfield(L, velData.LuaTableRef, "velocityX");
+	lua_getfield(L, i, "velocityX");
 	velData.velocityX = lua_tonumber(L, -1);
 	lua_pop(L, 1);
 
-	lua_getfield(L, velData.LuaTableRef, "velocityY");
+	lua_getfield(L, i, "velocityY");
 	velData.velocityY = lua_tonumber(L, -1);
 	lua_pop(L, 1);
 
@@ -50,11 +37,4 @@ static void lua_pushvelocitydata(lua_State* L, VelocityData& velData)
 
 	lua_pushnumber(L, velData.velocityY);
 	lua_setfield(L, -2, "velocityY");
-	
-	lua_pushstring(L, velData.ScriptPath);
-	lua_setfield(L, -2, "path");
-
-	lua_pushnumber(L, velData.LuaTableRef);
-	lua_setfield(L, -2, "ref");
-
 }
