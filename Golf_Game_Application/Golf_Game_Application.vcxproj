@@ -184,7 +184,7 @@
     <ClInclude Include="MeshComponent.h" />
     <ClInclude Include="Position.h" />
     <ClInclude Include="RenderSystem.h" />
-    <ClInclude Include="RightData.h" />
+    <ClInclude Include="VelocityData.h" />
     <ClInclude Include="RightSystem.hpp" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="State.h" />

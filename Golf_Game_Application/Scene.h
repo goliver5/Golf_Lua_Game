@@ -46,6 +46,7 @@ public:
 	template <typename T>
 	void RemoveComponent(int entity);
 
+	void StackDump(lua_State* L);
 
 	void UpdateSystems(float delta);
 
@@ -65,6 +66,7 @@ private:
 	static int lua_GetComponent(lua_State* L);
 	static int lua_SetComponent(lua_State* L);
 	static int lua_RemoveComponent(lua_State* L);
+	static int lua_StackDump(lua_State* L);
 
 	static int RefAndPushBehaviour(lua_State* L, int entity, const char* path);
 };

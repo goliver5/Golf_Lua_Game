@@ -13,7 +13,7 @@
 #include "EndScreen.h"
 #include "RightSystem.hpp"
 #include "Position.h"
-#include "RightData.h"
+#include "VelocityData.h"
 #include "Scene.h"
 
 

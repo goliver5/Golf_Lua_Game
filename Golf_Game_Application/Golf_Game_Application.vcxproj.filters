@@ -65,7 +65,7 @@
     <ClInclude Include="RightSystem.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RightData.h">
+    <ClInclude Include="VelocityData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Position.h">
