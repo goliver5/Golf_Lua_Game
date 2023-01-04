@@ -225,14 +225,9 @@ int Scene::lua_SetComponent(lua_State* L)
 	{
 		if (scene->HasComponents<Position>(entity))
 		{
-			std::cout << "LKLLKOI\n";
 			scene->RemoveComponent<Position>(entity);
 		}
 		scene->StackDump(L);
-		std::cout << "HFUIAWDHIUDBNAWUDIAWBDUIWADBU\n";
-		//Position value(type.c_str(), entity, 69, 420, 1337);
-		//value.posX = lua_tonumber(L, 3);
-
 
 
 		const char* path = lua_tostring(L, 3);
@@ -250,14 +245,30 @@ int Scene::lua_SetComponent(lua_State* L)
 		{
 			scene->RemoveComponent<Position>(entity);
 			//scene->StackDump(L);
-			scene->SetComponent<Position>(entity, lua_position(L, 3));
+		}
+		
+		//CHECKA OM DET FINNS NÅGOT PÅ STACKEN
+		bool somethingOnStack = (3 <= lua_gettop(L));
+		if (somethingOnStack)
+		{
+			
+			int t = lua_type(L, 3);
+			if (t == LUA_TTABLE) scene->SetComponent<Position>(entity, lua_position(L, 3));
+			else
+			{
+				float x = 0;
+				float y = 0;
+
+				if (lua_gettop(L) > 2 && lua_type(L, 3) == LUA_TNUMBER) x = lua_tonumber(L, 3);
+				if (lua_gettop(L) > 3 && lua_type(L, 4) == LUA_TNUMBER) y = lua_tonumber(L, 4);
+
+				scene->SetComponent<Position>(entity, x, y);
+			}
 		}
 		else
 		{
 			scene->SetComponent<Position>(entity, 400.f, 300.f);
 		}
-		//Position value = lua_position(L, "golfball.lua", 3);// (type.c_str(), entity, 69, 420, 1337);
-		//value.posX = lua_tonumber(L, 3);
 		
 		
 		return 1;
@@ -279,8 +290,24 @@ int Scene::lua_SetComponent(lua_State* L)
 		if (scene->HasComponents<VelocityData>(entity))
 		{
 			scene->RemoveComponent<VelocityData>(entity);
-			scene->SetComponent<VelocityData>(entity, lua_getvelocitydata(L, 3));
+		}
+		//CHECKA OM DET FINNS NÅGOT PÅ STACKEN
+		bool somethingOnStack = (3 <= lua_gettop(L));
+		if (somethingOnStack)
+		{
+			
+			int t = lua_type(L, 3);
+			if (t == LUA_TTABLE) scene->SetComponent<VelocityData>(entity, lua_getvelocitydata(L, 3));
+			else
+			{
+				float x = 0;
+				float y = 0;
+				
+				if (lua_gettop(L) > 2 && lua_type(L, 3) == LUA_TNUMBER) x = lua_tonumber(L, 3);
+				if (lua_gettop(L) > 3 && lua_type(L, 4) == LUA_TNUMBER) y = lua_tonumber(L, 4);
 
+				scene->SetComponent<VelocityData>(entity, x, y);
+			}
 		}
 		else
 		{

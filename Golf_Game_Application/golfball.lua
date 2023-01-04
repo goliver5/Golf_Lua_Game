@@ -10,8 +10,19 @@ function golfball:OnUpdate(delta)
 	local vel = scene.GetComponent(self.ID, "velocity")
 	pos.x = pos.x + delta * vel.velocityX
 	pos.y = pos.y + delta * vel.velocityY
-	vel.velocityX = math.max(vel.velocityX - delta * constant, 0)
-	vel.velocityY = math.max(vel.velocityY - delta * constant, 0)
+	
+	if (vel.velocityX < 0) then
+		vel.velocityX = math.min(vel.velocityX + delta * constant, 0)
+	else
+		vel.velocityX = math.max(vel.velocityX - delta * constant, 0)
+	end
+	
+	if (vel.velocityY < 0) then
+		vel.velocityY = math.min(vel.velocityY + delta * constant, 0)
+	else
+		vel.velocityY = math.max(vel.velocityY - delta * constant, 0)
+	end
+
 	scene.SetComponent(self.ID, "position", pos)
 	if (vel.velocityX == 0 and vel.velocityY == 0) 
 	then

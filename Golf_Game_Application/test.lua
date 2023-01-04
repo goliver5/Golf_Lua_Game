@@ -1,5 +1,5 @@
-scene.CreateEntity()
 
+scene.CreateEntity()
 scene.SetComponent(0, "position")
 scene.SetComponent(0, "mesh", 0)
 scene.SetComponent(0, "moveScript")
