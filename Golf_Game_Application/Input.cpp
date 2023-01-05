@@ -91,6 +91,6 @@ void Input::renderLine()
 
 
 		DrawCircle(this->savedPos.x, this->savedPos.y, 5, MAGENTA);
-		DrawLine(start.x, start.y, end.x, end.y, RED);
+		DrawLineEx(start, end, 2.f, RED);
 	}
 }

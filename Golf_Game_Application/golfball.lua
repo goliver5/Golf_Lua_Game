@@ -1,5 +1,5 @@
 local golfball = {}
-local constant = 1.0
+local constant = 50
 
 function golfball:OnCreate()
 	print("Golfball created!")
