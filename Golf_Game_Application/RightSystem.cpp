@@ -37,7 +37,9 @@ bool RightSystem::OnUpdate(entt::registry& registry, float delta)
             }
             
             lua_pop(L, 1);
-
+            lua_pop(L, 1);
+            //while (lua_gettop(L) > 0) lua_pop(L, 1);
+            //dump(L);
             //pos.posX += rightdata.speedX;
         }
     );

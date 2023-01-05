@@ -356,7 +356,7 @@ int Scene::lua_SetComponent(lua_State* L)
 		//lua_pushvalue(L, -1);
 		int luaTableRef = luaL_ref(L, LUA_REGISTRYINDEX);
 		scene->SetComponent<CollisionComponent>(entity, entity, luaTableRef, true, false);
-		scene->StackDump(L);
+		//scene->StackDump(L);
 
 												
 		return 1;
@@ -383,7 +383,22 @@ int Scene::lua_RemoveComponent(lua_State* L)
 	else if (type == "moveScript")
 		scene->RemoveComponent<MoveScript>(entity);
 	else if (type == "collision")
+	{
 		scene->RemoveComponent<CollisionComponent>(entity);
+		//if (lua_gettop(L) >= 3)
+		//{
+		//	std::cout << "REMOVED COL\n";
+		//	CollisionComponent col(entity, 0, false, false);
+		//	lua_getfield(L, 3, "xCol");
+		//	col.x = lua_tonumber(L, -1);
+		//	lua_pop(L, 1);
+		//
+		//	lua_getfield(L, 3, "yCol");
+		//	col.y = lua_tonumber(L, -1);
+		//	lua_pop(L, 1);
+		//}
+	}
+		
 	return 0;
 }
 

@@ -31,18 +31,25 @@ bool CollisionSystem::OnUpdate(entt::registry& registry, float delta)
                 std::cout << "error do file!\n";
             }
 
-            dump(L);
-            std::cout << "ENTITY: " << col.entity << "\n";
             lua_pushinteger(L, col.entity);
             lua_setfield(L, -2, "ID");
 
             lua_getfield(L, -1, "collide");
             lua_pushvalue(L, -2);
-            if (lua_pcall(L, 1, 0, 0) != LUA_OK)
+            bool x = true;// col.x;
+            bool y = true;// col.y;
+            lua_pushboolean(L, x);
+            lua_pushboolean(L, y);
+
+            if (lua_pcall(L, 3, 0, 0) != LUA_OK)
             {
                 DumpError(L);
             }
             lua_pop(L, 1);
+            lua_pop(L, 1);
+
+            //while (lua_gettop(L) > 0) lua_pop(L, 1);
+
         }
     );
 
