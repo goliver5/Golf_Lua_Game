@@ -3,6 +3,8 @@
 #include "VelocityData.h"
 #include <iostream>
 #include "MoveScript.h"
+#include "CollisionComponent.h"
+#include "CollsionSystem.h"
 
 Scene::Scene(lua_State* L)
 {
@@ -10,10 +12,16 @@ Scene::Scene(lua_State* L)
 
 	m_systems.push_back(new RightSystem(L));
 	m_systems.push_back(new RenderSystem(L));
+	m_systems.push_back(new CollisionSystem(L));
 }
 
 Scene::~Scene()
 {
+	for (int i = 0; i < m_systems.size(); i++)
+	{
+		delete m_systems[i];
+		m_systems[i] = nullptr;
+	}
 }
 
 int Scene::GetEntityCount()
@@ -206,10 +214,16 @@ int Scene::lua_GetComponent(lua_State* L)
 		MeshComponent& temp = scene->GetComponent<MeshComponent>(entity);
 		return 1;
 	}
-	if (type == "velocity" && scene->HasComponents<VelocityData>(entity))
+	else if (type == "velocity" && scene->HasComponents<VelocityData>(entity))
 	{
 		VelocityData& velData = scene->GetComponent<VelocityData>(entity);
 		lua_pushvelocitydata(L, velData);
+		return 1;
+	}
+	else if (type == "collision" && scene->HasComponents<CollisionComponent>(entity))
+	{
+		CollisionComponent& colData = scene->GetComponent<CollisionComponent>(entity);
+		lua_pushcollision(L, colData);
 		return 1;
 	}
 	lua_pushnil(L);
@@ -311,9 +325,9 @@ int Scene::lua_SetComponent(lua_State* L)
 		}
 		else
 		{
+			//scene->StackDump(L);
 			scene->SetComponent<VelocityData>(entity, 10.f, 10.f);
 		}
-
 		return 1;
 	}
 	else if (type == "moveScript")
@@ -328,7 +342,25 @@ int Scene::lua_SetComponent(lua_State* L)
 
 		return 1;
 	}
+	
+	else if (type == "collision")
+	{
+		if (scene->HasComponents<CollisionComponent>(entity))
+		{
+			scene->RemoveComponent<CollisionComponent>(entity);
+		}
 
+		//const char* path = lua_tostring(L, 3);
+		if (luaL_dofile(L, "golfball.lua")) std::cout << "COLLSION FILE ERROR\n";
+
+		//lua_pushvalue(L, -1);
+		int luaTableRef = luaL_ref(L, LUA_REGISTRYINDEX);
+		scene->SetComponent<CollisionComponent>(entity, entity, luaTableRef, true, false);
+		scene->StackDump(L);
+
+												
+		return 1;
+	}
 	//else if (type == "component2")
 	//{
 	//	float temp = lua_tonumber(L, 3);
@@ -350,6 +382,8 @@ int Scene::lua_RemoveComponent(lua_State* L)
 		scene->RemoveComponent<VelocityData>(entity);
 	else if (type == "moveScript")
 		scene->RemoveComponent<MoveScript>(entity);
+	else if (type == "collision")
+		scene->RemoveComponent<CollisionComponent>(entity);
 	return 0;
 }
 
