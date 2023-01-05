@@ -3,8 +3,14 @@
 #include "raylib.h"
 
 RenderSystem::RenderSystem(lua_State* L)
+    :inputClass(nullptr)
 {
     this->L = L;
+}
+
+void RenderSystem::addInputClass(Input* inputClass)
+{
+    this->inputClass = inputClass;
 }
 
 bool RenderSystem::OnUpdate(entt::registry& registry, float delta)
@@ -34,6 +40,7 @@ bool RenderSystem::OnUpdate(entt::registry& registry, float delta)
 
     DrawText("move the ball to Play Game and press A", 10, 10, 20, DARKGRAY);
     DrawText("Play game", 800 / 2 - 40, 450 / 4 - 5, 20, DARKGRAY);
+    inputClass->renderLine();
 
     EndDrawing();
 

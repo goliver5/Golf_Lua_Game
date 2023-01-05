@@ -7,11 +7,13 @@
 #include "CollsionSystem.h"
 
 Scene::Scene(lua_State* L)
+	:inputClass(Input(&registry))
 {
 	this->luaState = L;
-
+	RenderSystem* rSys = new RenderSystem(L);
+	rSys->addInputClass(&inputClass);
 	m_systems.push_back(new RightSystem(L));
-	m_systems.push_back(new RenderSystem(L));
+	m_systems.push_back(rSys);
 	m_systems.push_back(new CollisionSystem(L));
 }
 
@@ -94,6 +96,7 @@ void Scene::StackDump(lua_State* L)
 
 void Scene::UpdateSystems(float delta)
 {
+	inputClass.playerClick();
 	for (auto it = m_systems.begin();
 		it != m_systems.end();)
 	{

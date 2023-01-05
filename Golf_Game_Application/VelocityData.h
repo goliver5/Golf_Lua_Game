@@ -1,4 +1,5 @@
 #pragma once
+#include "lua.hpp"
 #include <iostream>
 
 struct VelocityData
