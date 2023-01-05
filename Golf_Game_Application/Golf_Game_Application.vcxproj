@@ -186,6 +186,7 @@
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MeshComponent.h" />
     <ClInclude Include="MoveScript.h" />
+    <ClInclude Include="PlayerComponent.h" />
     <ClInclude Include="Position.h" />
     <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="Tilemap.h" />
@@ -194,6 +195,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="System.h" />
+    <ClInclude Include="WallComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

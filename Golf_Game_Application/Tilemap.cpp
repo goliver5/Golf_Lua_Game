@@ -2,6 +2,7 @@
 #include <iostream>
 #include "Position.h"
 #include "MeshComponent.h"
+#include "WallComponent.h"
 
 Tilemap::Tilemap()
 {
@@ -19,7 +20,7 @@ bool Tilemap::CreateTileMap(Scene& scene)
 	float startposY = 0.0f;
 
 	//size to move components must be equal to size
-	float Offset = 32.0f;
+	float offset = 32.0f;
 
 	std::cout << "\ntype tile values\n";
 	for (int i = 0; i < HEIGHT; i++)
@@ -52,6 +53,7 @@ bool Tilemap::CreateTileMap(Scene& scene)
 			else if (tileNumber == TileMesh::WALL)
 			{
 				tileType = "../Sprites/wall.png";
+				scene.SetComponent<WallComponent>(entity, offset, offset);
 			}
 
 			// 0 as middle arg because we only need squares for tilemap
@@ -59,9 +61,9 @@ bool Tilemap::CreateTileMap(Scene& scene)
 			
 			std::cout << ", X: " << startposX << " Y: " << startposY;
 
-			startposX += Offset;
+			startposX += offset;
 		}
-		startposY += Offset;
+		startposY += offset;
 	}
 	std::cout << "\nEND TILE VALUES\n";
 	return false;

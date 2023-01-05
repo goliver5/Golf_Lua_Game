@@ -3,6 +3,7 @@
 #include "Position.h"
 #include "MeshComponent.h"
 #include "CollisionComponent.h"
+#include "WallComponent.h"
 
 Input::Input(entt::registry* registry)
 	:playerID(0), holding(false)
@@ -24,12 +25,12 @@ void Input::playerClick()
 		holding = true;
 	}
 
-	//bool shot = (GetMousePosition().x != this->savedPos.x && GetMousePosition().y != this->savedPos.y);
 	if (holding && !IsMouseButtonDown(MOUSE_BUTTON_LEFT))// && !r->all_of<VelocityData>((entt::entity)playerID))
 	{
 		if (!r->all_of<Position>((entt::entity)playerID)) return;
 		VelocityData vel;
 		
+		//MOVE OVER TO LUA
 		//this->savedPos.x = this->r->get<Position>((entt::entity)playerID).posX;// - GetMousePosition().x);
 		//this->savedPos.y = this->r->get<Position>((entt::entity)playerID).posY;// - GetMousePosition().y);
 		vel.velocityX = (this->savedPos.x - GetMousePosition().x);
@@ -42,17 +43,17 @@ void Input::playerClick()
 
 void Input::checkCollision()
 {
-	auto view = r->view<Position, MeshComponent>();
+	auto view = r->view<Position, WallComponent>();
 	Vector2 playerPos;
 	playerPos.x = this->r->get<Position>((entt::entity)playerID).posX;
 	playerPos.y = this->r->get<Position>((entt::entity)playerID).posY;
 
 	Rectangle rec;
-	view.each([&](Position& pos, MeshComponent& mesh)
+	view.each([&](Position& pos, WallComponent& wallComp)
 		{
 			Vector2 entityPos;
-			rec.height = 32.f;
-			rec.width = 32.f;
+			rec.height = wallComp.height;
+			rec.width = wallComp.width;
 			rec.x = pos.posX;// - rec.height / 2.f;
 			rec.y = pos.posY;// - rec.width / 2.f;
 

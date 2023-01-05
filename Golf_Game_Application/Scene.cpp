@@ -5,6 +5,7 @@
 #include "MoveScript.h"
 #include "CollisionComponent.h"
 #include "CollsionSystem.h"
+#include "PlayerComponent.h"
 
 Scene::Scene(lua_State* L)
 	:inputClass(Input(&registry))
@@ -199,6 +200,10 @@ int Scene::lua_HasComponent(lua_State* L)
 		hasComponent =
 			scene->HasComponents<MoveScript>(entity);
 	}
+	else if (type == "playerComponent") {
+		hasComponent =
+			scene->HasComponents<PlayerComponent>(entity);
+	}
 	lua_pushboolean(L, hasComponent);
 	return 1;
 }
@@ -367,6 +372,24 @@ int Scene::lua_SetComponent(lua_State* L)
 												
 		return 1;
 	}
+	else if (type == "playerComponent")
+	{
+		if (scene->HasComponents<PlayerComponent>(entity))
+		{
+			scene->RemoveComponent<PlayerComponent>(entity);
+		}
+		float r = 0.f;
+		float g = 0.f;
+		float b = 255.f;
+
+		if (lua_gettop(L) > 4)
+		{
+			r = (float)lua_tonumber(L, 3);
+			g = (float)lua_tonumber(L, 4);
+			b = (float)lua_tonumber(L, 5);
+		}
+		scene->SetComponent<PlayerComponent>(entity, r, g, b);
+	}
 	//else if (type == "component2")
 	//{
 	//	float temp = lua_tonumber(L, 3);
@@ -389,21 +412,9 @@ int Scene::lua_RemoveComponent(lua_State* L)
 	else if (type == "moveScript")
 		scene->RemoveComponent<MoveScript>(entity);
 	else if (type == "collision")
-	{
 		scene->RemoveComponent<CollisionComponent>(entity);
-		//if (lua_gettop(L) >= 3)
-		//{
-		//	std::cout << "REMOVED COL\n";
-		//	CollisionComponent col(entity, 0, false, false);
-		//	lua_getfield(L, 3, "xCol");
-		//	col.x = lua_tonumber(L, -1);
-		//	lua_pop(L, 1);
-		//
-		//	lua_getfield(L, 3, "yCol");
-		//	col.y = lua_tonumber(L, -1);
-		//	lua_pop(L, 1);
-		//}
-	}
+	else if (type == "playerComponent")
+		scene->RemoveComponent<PlayerComponent>(entity);
 		
 	return 0;
 }
