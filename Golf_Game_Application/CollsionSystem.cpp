@@ -36,8 +36,8 @@ bool CollisionSystem::OnUpdate(entt::registry& registry, float delta)
 
             lua_getfield(L, -1, "collide");
             lua_pushvalue(L, -2);
-            bool x = true;// col.x;
-            bool y = true;// col.y;
+            bool x = col.x;
+            bool y = col.y;
             lua_pushboolean(L, x);
             lua_pushboolean(L, y);
 

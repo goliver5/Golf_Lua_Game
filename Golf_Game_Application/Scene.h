@@ -4,13 +4,14 @@
 #include "System.h"
 #include "RightSystem.hpp"
 #include "RenderSystem.h"
+#include "Input.h"
 
 class Scene
 {
 	entt::registry registry;
 	lua_State* luaState;
 	std::vector<System*> m_systems;
-
+	Input inputClass;
 
 public:
 

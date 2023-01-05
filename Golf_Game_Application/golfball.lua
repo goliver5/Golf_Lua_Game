@@ -39,11 +39,11 @@ function golfball:collide(x, y)
 	local vel = scene.GetComponent(self.ID, "velocity")
 	-- local collisionInfo = scene.GetComponent(self.ID, "collision")	
 	if (x) then
-		pos.x = pos.x - vel.velocityX * 1/144 
+		pos.x = pos.x - vel.velocityX * 4/144 
 		vel.velocityX = -vel.velocityX * 0.9
 	end
 	if (y) then
-		pos.y = pos.y - vel.velocityY * 1/144 
+		pos.y = pos.y - vel.velocityY * 4/144 
 		vel.velocityY = -vel.velocityY * 0.9
 	end
 	
