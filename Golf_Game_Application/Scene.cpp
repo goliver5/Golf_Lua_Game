@@ -294,8 +294,9 @@ int Scene::lua_SetComponent(lua_State* L)
 		{
 			scene->RemoveComponent<MeshComponent>(entity);
 		}
+		int meshEnumValue = (int)lua_tointeger(L, 3);
 		std::cout << "LIGAM\n";
-		scene->SetComponent<MeshComponent>(entity, 0);
+		scene->SetComponent<MeshComponent>(entity, meshEnumValue);
 		return 1;
 	}
 	else if (type == "velocity")

@@ -173,6 +173,7 @@
     <ClCompile Include="RightSystem.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="State.cpp" />
+    <ClCompile Include="Tilemap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionComponent.h" />
@@ -185,6 +186,7 @@
     <ClInclude Include="MoveScript.h" />
     <ClInclude Include="Position.h" />
     <ClInclude Include="RenderSystem.h" />
+    <ClInclude Include="Tilemap.h" />
     <ClInclude Include="VelocityData.h" />
     <ClInclude Include="RightSystem.hpp" />
     <ClInclude Include="Scene.h" />

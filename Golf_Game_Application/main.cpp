@@ -15,6 +15,7 @@
 #include "Position.h"
 #include "VelocityData.h"
 #include "Scene.h"
+#include "Tilemap.h"
 
 
 void DumpError(lua_State* L)
@@ -76,10 +77,14 @@ int main()
 	//rSus->OnUpdate(registry, 0.2f);
 
 
+	Tilemap tilemap;
+	tilemap.CreateTileMap(scene);
+	tilemap.MapCounter();
 
 	while (state != nullptr)
 	{
 		scene.UpdateSystems(1.f/144.f);
+
 		switch (currentState)
 		{
 		case CURRENTSTATE::NOCHANGE:

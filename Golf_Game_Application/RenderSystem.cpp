@@ -20,14 +20,18 @@ bool RenderSystem::OnUpdate(entt::registry& registry, float delta)
             Vector2 meshPosition;
             meshPosition.x = pos.posX;
             meshPosition.y = pos.posY;
-
-         
-
-
+            
+            if (mesh.usingMesh == EntityMesh::SQUARE)
+            {
+                DrawTexture(mesh.texture, meshPosition.x, meshPosition.y, WHITE);
+            }
+            else if (mesh.usingMesh == EntityMesh::CIRCLE)
+            {
+                DrawCircleV(meshPosition, 10, MAROON);
+            }
            
 
-            DrawCircleV(meshPosition, 10, MAROON);
-
+            //DrawCircleV(meshPosition, 10, MAROON);
             
         }
     );
