@@ -97,6 +97,8 @@ void Scene::StackDump(lua_State* L)
 void Scene::UpdateSystems(float delta)
 {
 	inputClass.playerClick();
+	inputClass.checkCollision();
+
 	for (auto it = m_systems.begin();
 		it != m_systems.end();)
 	{

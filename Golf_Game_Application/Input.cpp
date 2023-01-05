@@ -1,6 +1,8 @@
 #include "Input.h"
 #include "VelocityData.h"
 #include "Position.h"
+#include "MeshComponent.h"
+#include "CollisionComponent.h"
 
 Input::Input(entt::registry* registry)
 	:playerID(0), holding(false)
@@ -36,6 +38,43 @@ void Input::playerClick()
 		this->savedPos = GetMousePosition();
 		holding = false;
 	}
+}
+
+void Input::checkCollision()
+{
+	auto view = r->view<Position, MeshComponent>();
+	Vector2 playerPos;
+	playerPos.x = this->r->get<Position>((entt::entity)playerID).posX;
+	playerPos.y = this->r->get<Position>((entt::entity)playerID).posY;
+
+	Rectangle rec;
+	view.each([&](Position& pos, MeshComponent& mesh)
+		{
+			Vector2 entityPos;
+			rec.height = 32.f;
+			rec.width = 32.f;
+			rec.x = pos.posX;// - rec.height / 2.f;
+			rec.y = pos.posY;// - rec.width / 2.f;
+
+			if (rec.x == playerPos.x && rec.y == playerPos.y);
+			else if (CheckCollisionCircleRec(playerPos, 10, rec))
+			{
+				CollisionComponent col(0, 0, false, false);
+
+				//Checks vector from player position to center of rectangle
+				if (abs(playerPos.x - (rec.x + rec.width / 2)) < abs(playerPos.y - (rec.y + rec.height / 2)))
+				{
+					col.y = true;
+				}
+				else
+				{
+					col.x = true;
+				}
+
+				r->emplace_or_replace<CollisionComponent>((entt::entity)playerID, col);
+			}
+		}
+	);
 }
 
 void Input::renderLine()

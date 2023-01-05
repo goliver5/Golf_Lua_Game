@@ -21,6 +21,7 @@ bool RenderSystem::OnUpdate(entt::registry& registry, float delta)
     BeginDrawing();
     ClearBackground(RAYWHITE);
 
+    int i = 0;
     view.each([&](Position& pos, MeshComponent& mesh)
         {
             Vector2 meshPosition;
@@ -32,9 +33,12 @@ bool RenderSystem::OnUpdate(entt::registry& registry, float delta)
 
            
 
-            DrawCircleV(meshPosition, 10, MAROON);
-
-            
+            if (i == 0) DrawCircleV(meshPosition, 10, MAROON);
+            else
+            {
+                DrawRectangle(meshPosition.x, meshPosition.y, 32.f, 32.f, BLUE);
+            }
+            i++;
         }
     );
 

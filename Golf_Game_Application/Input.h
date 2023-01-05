@@ -16,5 +16,6 @@ public:
 	~Input();
 
 	void playerClick();
+	void checkCollision();
 	void renderLine();
 };
