@@ -44,8 +44,18 @@ bool Tilemap::CreateTileMap(Scene& scene)
 			}
 			scene.SetComponent<Position>(entity, startposX, startposY);
 
-			// 0 as last arg because we only need squares for tilemap
-			scene.SetComponent<MeshComponent>(entity, 0);
+			std::string tileType;
+			if (tileNumber == TileMesh::GROUND)
+			{
+				tileType = "../Sprites/ground.png";
+			}
+			else if (tileNumber == TileMesh::WALL)
+			{
+				tileType = "../Sprites/wall.png";
+			}
+
+			// 0 as middle arg because we only need squares for tilemap
+			scene.SetComponent<MeshComponent>(entity, 0, tileType);
 			
 			std::cout << ", X: " << startposX << " Y: " << startposY;
 

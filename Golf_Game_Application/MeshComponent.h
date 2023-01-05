@@ -14,7 +14,7 @@ struct MeshComponent
 
 	Texture2D texture;
 
-	MeshComponent(int mesh = 0, std::string fileName = "tileTest.png")
+	MeshComponent(int mesh = 0, std::string fileName = "../Sprites/tileTest.png")
 	{
 		this->usingMesh = (EntityMesh)mesh;
 		std::cout << "mesh NR: " << this->usingMesh << "\n";
