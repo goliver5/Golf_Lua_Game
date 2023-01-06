@@ -4,7 +4,7 @@
 Menu::Menu(lua_State* L)
 	:scene(Scene(L))
 {
-	InitWindow(screenWidth, screenHeight, "Golf Game");
+	if (!IsWindowReady()) InitWindow(screenWidth, screenHeight, "Golf Game");
 	SetTargetFPS(144);
 
 	std::cout << "\n----------------------------\nLua console:\n\n";

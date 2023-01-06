@@ -11,6 +11,7 @@
 #include "Menu.h"
 #include "Game.h"
 #include "EndScreen.h"
+#include "Credits.h"
 #include "RightSystem.hpp"
 #include "Position.h"
 #include "VelocityData.h"
@@ -103,6 +104,11 @@ int main()
 		case CURRENTSTATE::ENDSCREEN:
 			delete state;
 			state = new EndScreen();
+			currentState = CURRENTSTATE::NOCHANGE;
+			break;
+		case CURRENTSTATE::CREDITS:
+			delete state;
+			state = new Credits();
 			currentState = CURRENTSTATE::NOCHANGE;
 			break;
 		default:
