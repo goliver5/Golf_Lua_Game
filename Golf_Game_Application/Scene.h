@@ -69,6 +69,8 @@ private:
 	static int lua_RemoveComponent(lua_State* L);
 	static int lua_StackDump(lua_State* L);
 
+	static int lua_CreateTileMap(lua_State* L);
+
 	static int RefAndPushBehaviour(lua_State* L, int entity, const char* path);
 };
 

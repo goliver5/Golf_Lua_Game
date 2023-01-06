@@ -129,6 +129,7 @@ void Scene::lua_openscene(lua_State* L, Scene* scene)
 		{ "SetComponent", lua_SetComponent },
 		{ "RemoveComponent", lua_RemoveComponent },
 		{ "StackDump", lua_StackDump },
+		{ "CreateTileMap", lua_CreateTileMap },
 		{ NULL, NULL }
 	};
 	lua_pushlightuserdata(L, scene);
@@ -423,6 +424,15 @@ int Scene::lua_StackDump(lua_State* L)
 {
 	Scene* scene = lua_GetSceneUpValue(L);
 	scene->StackDump(L);
+	return 0;
+}
+
+int Scene::lua_CreateTileMap(lua_State* L)
+{
+	Scene* scene = lua_GetSceneUpValue(L);
+
+	if (luaL_dofile(L, "createTileMap.lua")) std::cout << "CREATE TILE MAP ERROR\n";
+	
 	return 0;
 }
 
