@@ -1,6 +1,6 @@
 #pragma once
 
-enum class CURRENTSTATE { NOCHANGE, EXIT, MENU, GAME, ENDSCREEN};
+enum class CURRENTSTATE { NOCHANGE, EXIT, MENU, GAME, ENDSCREEN, CREDITS};
 
 class State
 {

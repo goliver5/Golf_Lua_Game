@@ -5,6 +5,7 @@
 #include "RightSystem.hpp"
 #include "RenderSystem.h"
 #include "Input.h"
+#include "State.h"
 
 class Scene
 {
@@ -50,6 +51,8 @@ public:
 	void StackDump(lua_State* L);
 
 	void UpdateSystems(float delta);
+
+	CURRENTSTATE Update(float delta);
 
 	//Lua Functions
 public:

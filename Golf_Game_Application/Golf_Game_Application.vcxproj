@@ -181,6 +181,7 @@
     <ClInclude Include="CollsionSystem.h" />
     <ClInclude Include="EndScreen.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="HoleComponent.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="LuaExtraFunctions.h" />
     <ClInclude Include="Menu.h" />

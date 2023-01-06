@@ -2,6 +2,7 @@
 
 #include "entt/entt.hpp"
 #include "raylib.h"
+#include "State.h"
 
 class Input
 {
@@ -15,6 +16,7 @@ public:
 	Input(entt::registry* registry);
 	~Input();
 
+	CURRENTSTATE wonHole();
 	void playerClick();
 	void checkCollision();
 	void renderLine();

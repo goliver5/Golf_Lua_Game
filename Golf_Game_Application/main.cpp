@@ -51,13 +51,10 @@ int main()
 	std::thread consoleThread(ConsoleThreadFunction, L);
 
 
-	State* state = new Menu();
+	State* state = new Menu(L);
 	CURRENTSTATE currentState = CURRENTSTATE::NOCHANGE;
 
-	Scene scene(L);
-	scene.lua_openscene(L, &scene);
-
-	if (luaL_dofile(L, "test.lua")) std::cout << "WRONG\n";
+	
 	/*scene.CreateEntity();
 
 	Position p("uwu", 3, 0,0,0);
@@ -77,13 +74,11 @@ int main()
 	//rSus->OnUpdate(registry, 0.2f);
 
 
-	Tilemap tilemap;
-	tilemap.CreateTileMap(scene);
-	tilemap.MapCounter();
+	
 
 	while (state != nullptr)
 	{
-		scene.UpdateSystems(1.f/144.f);
+		//scene.UpdateSystems(1.f/144.f);
 
 		switch (currentState)
 		{
@@ -97,7 +92,7 @@ int main()
 			break;
 		case CURRENTSTATE::MENU:
 			delete state;
-			state = new Menu();
+			state = new Menu(L);
 			currentState = CURRENTSTATE::NOCHANGE;
 			break;
 		case CURRENTSTATE::GAME:

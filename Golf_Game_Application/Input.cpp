@@ -4,6 +4,7 @@
 #include "MeshComponent.h"
 #include "CollisionComponent.h"
 #include "WallComponent.h"
+#include "HoleComponent.h"
 
 Input::Input(entt::registry* registry)
 	:playerID(0), holding(false)
@@ -15,6 +16,36 @@ Input::Input(entt::registry* registry)
 
 Input::~Input()
 {
+}
+
+CURRENTSTATE Input::wonHole()
+{
+	CURRENTSTATE state = CURRENTSTATE::NOCHANGE;
+
+	auto view = r->view<Position, HoleComponent>();
+	Vector2 playerPos;
+	playerPos.x = this->r->get<Position>((entt::entity)playerID).posX;
+	playerPos.y = this->r->get<Position>((entt::entity)playerID).posY;
+
+	Rectangle rec;
+	view.each([&](Position& pos, HoleComponent& holeComp)
+		{
+			Vector2 entityPos;
+			rec.height = holeComp.height;
+			rec.width = holeComp.width;
+			rec.x = pos.posX;// - rec.height / 2.f;
+			rec.y = pos.posY;// - rec.width / 2.f;
+
+			if (rec.x == playerPos.x && rec.y == playerPos.y);
+			else if (CheckCollisionCircleRec(playerPos, 10, rec))
+			{
+				if (holeComp.state == 0) state = CURRENTSTATE::GAME;
+				else if (holeComp.state == 1) state = CURRENTSTATE::EXIT;
+				else state = CURRENTSTATE::CREDITS;
+			}
+		}
+	);
+	return state;
 }
 
 void Input::playerClick()
@@ -76,6 +107,8 @@ void Input::checkCollision()
 			}
 		}
 	);
+
+	
 }
 
 void Input::renderLine()

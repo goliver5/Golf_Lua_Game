@@ -3,6 +3,7 @@
 #include "Position.h"
 #include "MeshComponent.h"
 #include "WallComponent.h"
+#include "HoleComponent.h"
 
 Tilemap::Tilemap()
 {
@@ -21,6 +22,7 @@ bool Tilemap::CreateTileMap(Scene& scene)
 
 	//size to move components must be equal to size
 	float offset = 32.0f;
+	int holeCounter = 0;
 
 	std::cout << "\ntype tile values\n";
 	for (int i = 0; i < HEIGHT; i++)
@@ -54,6 +56,11 @@ bool Tilemap::CreateTileMap(Scene& scene)
 			{
 				tileType = "../Sprites/wall.png";
 				scene.SetComponent<WallComponent>(entity, offset, offset);
+			}
+			else if (tileNumber == TileMesh::HOLE)
+			{
+				tileType = "../Sprites/hole1.png";
+				scene.SetComponent<HoleComponent>(entity, offset, offset, holeCounter++);
 			}
 
 			// 0 as middle arg because we only need squares for tilemap
