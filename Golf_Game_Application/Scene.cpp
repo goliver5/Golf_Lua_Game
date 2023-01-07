@@ -431,8 +431,31 @@ int Scene::lua_CreateTileMap(lua_State* L)
 {
 	Scene* scene = lua_GetSceneUpValue(L);
 
+	//int luaTableRef = RefAndPushBehaviour(L, 69, "createTileMap.lua");
+
 	if (luaL_dofile(L, "createTileMap.lua")) std::cout << "CREATE TILE MAP ERROR\n";
 	
+	lua_getglobal(L, "CreateTileMap");
+	std::string arg = "test UWU";
+	//lua_pushstring(L,"TEST UWU");
+
+	if (lua_pcall(L, 1, 0, 0, 0)) std::cout << "ERROR CREATE TILE MAP c++ ....\n";
+
+	//int luaTableRef = luaL_ref(L, LUA_REGISTRYINDEX);
+
+	//lua_rawgeti(L, LUA_REGISTRYINDEX, luaTableRef);
+
+	////lua_pushinteger(L, 120);
+	//lua_setfield(L, -2, "ID");
+
+	////std::cout << "awdawwadwwa\n";
+	//lua_getfield(L, -1, "CreateTileMap");
+
+	//if (lua_pcall(L, 1, 0, 0) != LUA_OK)
+	//{
+	//	scene->lua_StackDump(L);
+	//}
+
 	return 0;
 }
 
