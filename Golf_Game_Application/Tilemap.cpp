@@ -113,6 +113,7 @@ void Tilemap::writeLevelToFile(std::string fileName)
 			for (int j = 0; j < WIDTH; j++)
 			{
 				file << tileMap[j + i * WIDTH];
+				if (j - 1 < WIDTH) file << " ";
 			}
 			if (i < HEIGHT - 1) file << "\n";
 		}
