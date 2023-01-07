@@ -119,6 +119,7 @@ CURRENTSTATE Scene::Update(float delta)
 
 	inputClass.playerClick();
 	inputClass.checkCollision();
+	inputClass.handleMouseClick();
 	state = inputClass.wonHole();
 	return state;
 }

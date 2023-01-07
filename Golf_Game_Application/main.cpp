@@ -12,6 +12,7 @@
 #include "Game.h"
 #include "EndScreen.h"
 #include "Credits.h"
+#include "Editor.h"
 #include "RightSystem.hpp"
 #include "Position.h"
 #include "VelocityData.h"
@@ -51,36 +52,13 @@ int main()
 
 	std::thread consoleThread(ConsoleThreadFunction, L);
 
+	InitWindow(800, 480, "Golf Game");
 
 	State* state = new Menu(L);
 	CURRENTSTATE currentState = CURRENTSTATE::NOCHANGE;
 
-	
-	/*scene.CreateEntity();
-
-	Position p("uwu", 3, 0,0,0);
-	rightData r;
-
-	scene.SetComponent<Position>(0, p);*/
-
-	//entt::registry registry;
-
-	//entt::entity entity = registry.create();
-
-	//registry.emplace<Position>(entity, 100, 100, 100);
-	//registry.emplace<rightData>(entity);
-
-	//System* rSus = new RightSystem(20);
-
-	//rSus->OnUpdate(registry, 0.2f);
-
-
-	
-
 	while (state != nullptr)
 	{
-		//scene.UpdateSystems(1.f/144.f);
-
 		switch (currentState)
 		{
 		case CURRENTSTATE::NOCHANGE:
@@ -111,61 +89,18 @@ int main()
 			state = new Credits();
 			currentState = CURRENTSTATE::NOCHANGE;
 			break;
+		case CURRENTSTATE::EDITOR:
+			delete state;
+			state = new Editor(L);
+			currentState = CURRENTSTATE::NOCHANGE;
+			break;
 		default:
 			break;
 		}
 	}
 
-	//bool running = true;
-	//while (running)
-	//{
-	//	//Update Game
-	//	//Render Game
-	//	std::cout << "[C++] Update" << std::endl;
-	//}
-
-
-
-	//entt::registry registry;
-
-	//entt::entity entity = registry.create();
-
-	//struct Physics
-	//{
-	//	float VelocityY;
-	//	float GravityFactorY;
-	//};
-
-	//struct Position
-	//{
-	//	float Y;
-	//};
-
-	//registry.emplace<Position>(entity, 100.f);
-	//registry.emplace<Physics>(entity, 0.f, -9.82f);
-
-	//auto view = registry.view<Position, Physics>();
-
-	//float delta = 0.001254f;
-	//int count = 0;
-
-	//for (int i = 0; i < 5; i++)
-	//{
-	//	view.each([&](Position& position, Physics& physics)
-	//		{
-	//			position.Y += physics.VelocityY * delta; //Change to delta
-	//			physics.VelocityY += physics.GravityFactorY * delta; //Change to delta
-	//			count++;
-	//		}
-	//	);
-
-
-	//	Position& position = registry.get<Position>(entity);
-	//	std::cout << "Position: " << position.Y << std::endl;
-	//	std::getchar();
-	//}
-	//
-
-	//std::cout << "Count: " << count << std::endl;
+	consoleThread.detach();
+	lua_close(L);
+	CloseWindow();
 	return 0;
 }

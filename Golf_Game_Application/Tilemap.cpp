@@ -1,9 +1,11 @@
 #include "Tilemap.h"
 #include <iostream>
 #include "Position.h"
+#include <fstream>
 #include "MeshComponent.h"
 #include "WallComponent.h"
 #include "HoleComponent.h"
+#include "TileComponent.h"
 
 Tilemap::Tilemap()
 {
@@ -55,22 +57,31 @@ bool Tilemap::CreateTileMap(Scene& scene)
 			else if (tileNumber == TileMesh::WALL)
 			{
 				tileType = "../Sprites/wall.png";
-				scene.SetComponent<WallComponent>(entity, offset, offset);
+				scene.SetComponent<WallComponent>(entity);
 			}
 			else if (tileNumber == TileMesh::HOLE)
 			{
 				tileType = "../Sprites/hole1.png";
-				scene.SetComponent<HoleComponent>(entity, offset, offset, holeCounter++);
+				scene.SetComponent<HoleComponent>(entity, holeCounter++);
 			}
 
 			// 0 as middle arg because we only need squares for tilemap
 			scene.SetComponent<MeshComponent>(entity, 0, tileType);
-			
+			scene.SetComponent<TileComponent>(entity, entity, offset, offset);
+			tileMapID[j + i * WIDTH] = entity;
+
 			std::cout << ", X: " << startposX << " Y: " << startposY;
 
 			startposX += offset;
 		}
 		startposY += offset;
+	}
+
+	std::cout << "\nID for tilemap\n";
+	for (int i = 0; i < WIDTH*HEIGHT; i++)
+	{
+		std::cout << tileMapID[i] << " ";
+		if ((i + 1) % WIDTH == 0) std::cout << "\n";
 	}
 	std::cout << "\nEND TILE VALUES\n";
 	return false;
@@ -89,4 +100,22 @@ void Tilemap::MapCounter()
 		}
 	}
 	std::cout << "\nEND TILES\n";
+}
+
+void Tilemap::writeLevelToFile(std::string fileName)
+{
+	std::ofstream file;
+	file.open(fileName);
+	if (file.is_open())
+	{
+		for (int i = 0; i < HEIGHT; i++)
+		{
+			for (int j = 0; j < WIDTH; j++)
+			{
+				file << tileMap[j + i * WIDTH];
+			}
+			if (i < HEIGHT - 1) file << "\n";
+		}
+	}
+	file.close();
 }
