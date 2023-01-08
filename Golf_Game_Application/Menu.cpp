@@ -13,8 +13,8 @@ Menu::Menu(lua_State* L)
 	if (luaL_dofile(L, "test.lua")) std::cout << "WRONG\n";
 
 	Tilemap tilemap;
-	tilemap.CreateTileMap(scene);
-	tilemap.MapCounter();
+	//tilemap.CreateTileMap(scene);
+	//tilemap.MapCounter();
 }
 
 Menu::~Menu()

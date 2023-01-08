@@ -53,8 +53,6 @@ int main()
 
 	std::thread consoleThread(ConsoleThreadFunction, L);
 
-	InitWindow(800, 480, "Golf Game");
-
 	State* state = new Menu(L);
 	CURRENTSTATE currentState = CURRENTSTATE::NOCHANGE;
 

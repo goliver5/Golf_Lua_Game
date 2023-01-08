@@ -6,6 +6,9 @@
 #include "CollisionComponent.h"
 #include "CollsionSystem.h"
 #include "PlayerComponent.h"
+#include "WallComponent.h"
+#include "TileComponent.h"
+#include "HoleComponent.h"
 
 Scene::Scene(lua_State* L)
 	:inputClass(Input(&registry))
@@ -412,6 +415,36 @@ int Scene::lua_SetComponent(lua_State* L)
 		}
 		scene->SetComponent<PlayerComponent>(entity, r, g, b);
 	}
+	else if (type == "wall")
+	{
+		if (scene->HasComponents<WallComponent>(entity))
+		{
+			scene->RemoveComponent<WallComponent>(entity);
+		}
+
+		scene->SetComponent<WallComponent>(entity);
+	}
+	else if (type == "tile")
+	{
+		if (scene->HasComponents<TileComponent>(entity))
+		{
+			scene->RemoveComponent<TileComponent>(entity);
+		}
+
+		scene->SetComponent<TileComponent>(entity, entity);
+	}
+	else if (type == "hole")
+	{
+		if (scene->HasComponents<HoleComponent>(entity))
+		{
+			scene->RemoveComponent<HoleComponent>(entity);
+		}
+
+		int holeState = lua_tonumber(L, 3);
+		std::cout << "Hole State: " << holeState << "\n";
+
+		scene->SetComponent<HoleComponent>(entity, holeState);
+	}
 	//else if (type == "component2")
 	//{
 	//	float temp = lua_tonumber(L, 3);
@@ -437,6 +470,12 @@ int Scene::lua_RemoveComponent(lua_State* L)
 		scene->RemoveComponent<CollisionComponent>(entity);
 	else if (type == "playerComponent")
 		scene->RemoveComponent<PlayerComponent>(entity);
+	else if (type == "wall")
+		scene->RemoveComponent<WallComponent>(entity);
+	else if (type == "tile")
+		scene->RemoveComponent<TileComponent>(entity);
+	else if (type == "hole")
+		scene->RemoveComponent<HoleComponent>(entity);
 		
 	return 0;
 }
