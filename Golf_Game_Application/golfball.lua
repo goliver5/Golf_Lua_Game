@@ -1,5 +1,5 @@
 local golfball = {}
-local constant = 50
+local constant = 150
 
 function golfball:OnCreate()
 	print("Golfball created!")
@@ -19,6 +19,7 @@ function golfball:OnUpdate(delta)
 		scene.SetComponent(self.ID, "velocity", vel)
 	else
 		scene.RemoveComponent(self.ID, "velocity")
+		scene.RemoveComponent(self.ID, "moveScript")
 	end
 	scene.SetComponent(self.ID, "position", pos)
 end

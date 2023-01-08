@@ -16,6 +16,7 @@ Editor::Editor(lua_State* L)
     //lua_pushstring(L,"TEST UWU");
 
     if (lua_pcall(L, 1, 0, 0, 0)) std::cout << "ERROR CREATE TILE MAP c++ ....\n";
+    lua_pop(L, 1);
 }
 
 Editor::~Editor()

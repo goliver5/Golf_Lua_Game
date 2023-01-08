@@ -7,6 +7,8 @@
 #include "HoleComponent.h"
 #include "TileComponent.h"
 #include "Scene.h"
+#include <string>
+#include "LuaExtraFunctions.h"
 
 Input::Input(lua_State* L)
 	:playerID(0), holding(false)
@@ -35,8 +37,8 @@ CURRENTSTATE Input::wonHole()
 			Vector2 entityPos;
 			rec.height = tileComp.height;
 			rec.width = tileComp.width;
-			rec.x = pos.posX;// - rec.height / 2.f;
-			rec.y = pos.posY;// - rec.width / 2.f;
+			rec.x = pos.posX;
+			rec.y = pos.posY;
 
 			if (rec.x == playerPos.x && rec.y == playerPos.y);
 			else if (CheckCollisionCircleRec(playerPos, 10, rec))
@@ -45,6 +47,7 @@ CURRENTSTATE Input::wonHole()
 				else if (holeComp.state == 1) state = CURRENTSTATE::EDITOR;
 				else if (holeComp.state == 2) state = CURRENTSTATE::EXIT;
 				else state = CURRENTSTATE::CREDITS;
+				strokes = 0;
 			}
 		}
 	);
@@ -58,7 +61,7 @@ void Input::setRegistry(entt::registry* registry)
 
 void Input::handleMouseClick()
 {
-	if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT))
+	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
 	{
 		auto view = r->view<Position, TileComponent>();
 		Vector2 mousePos = GetMousePosition();
@@ -85,10 +88,10 @@ void Input::handleMouseClick()
 		lua_pushvalue(L, -1);
 		lua_pushnumber(L, this->selectedEntity);
 		lua_pushstring(L, "");
-		//lua_pushstring(L,"TEST UWU");
 
 		if (lua_pcall(L, 2, 0, 0, 0)) std::cout << "ERROR CREATE TILE MAP c++ ....\n";
 		this->selectedEntity = -1;
+		lua_pop(L, 1);
 	}
 	if (this->selectedEntity > -1 && IsKeyPressed(KEY_W))
 	{
@@ -99,10 +102,10 @@ void Input::handleMouseClick()
 		lua_pushvalue(L, -1);
 		lua_pushnumber(L, this->selectedEntity);
 		lua_pushstring(L, "wall");
-		//lua_pushstring(L,"TEST UWU");
 		
 		if (lua_pcall(L, 2, 0, 0, 0)) std::cout << "ERROR CREATE TILE MAP c++ ....\n";
 		this->selectedEntity = -1;
+		lua_pop(L, 1);
 	}
 	if (this->selectedEntity > -1 && IsKeyPressed(KEY_E))
 	{
@@ -116,6 +119,7 @@ void Input::handleMouseClick()
 
 		if (lua_pcall(L, 2, 0, 0, 0)) std::cout << "ERROR CREATE TILE MAP c++ ....\n";
 		this->selectedEntity = -1;
+		lua_pop(L, 1);
 	}
 }
 
@@ -131,21 +135,24 @@ void Input::playerClick()
 	{
 		if (!r->all_of<Position>((entt::entity)playerID)) return;
 		VelocityData vel;
-		
+			
 		//MOVE OVER TO LUA
-		//this->savedPos.x = this->r->get<Position>((entt::entity)playerID).posX;// - GetMousePosition().x);
-		//this->savedPos.y = this->r->get<Position>((entt::entity)playerID).posY;// - GetMousePosition().y);
-		vel.velocityX = 2.f * (this->savedPos.x - GetMousePosition().x);
-		vel.velocityY = 2.f * (this->savedPos.y - GetMousePosition().y);
-		float vectorLength = vel.velocityX * vel.velocityX + vel.velocityY * vel.velocityY;
-		if (vectorLength > 100000)
-		{
-			vel.velocityX *= (sqrt(100000 / vectorLength));
-			vel.velocityY *= (sqrt(100000 / vectorLength));
-		}
-		r->emplace_or_replace<VelocityData>((entt::entity)playerID, vel);
+		if (luaL_dofile(L, "inputs.lua")) std::cout << "INPUT FILE ERROR\n";
+
+		lua_getglobal(L, "hitBall");
+		lua_pushvalue(L, -1);
+		lua_pushnumber(L, playerID);
+		lua_pushnumber(L, this->savedPos.x);
+		lua_pushnumber(L, this->savedPos.y);
+		lua_pushnumber(L, GetMousePosition().x);
+		lua_pushnumber(L, GetMousePosition().y);
+
+		if (lua_pcall(L, 5, 0, 0, 0)) DumpError(L);
+		lua_pop(L, 1);
+
 		this->savedPos = GetMousePosition();
 		holding = false;
+		strokes++;
 	}
 }
 
@@ -190,6 +197,8 @@ void Input::checkCollision()
 
 void Input::renderLine()
 {
+	std::string strokeCounter = "Strokes: " + std::to_string(strokes);
+	DrawText(strokeCounter.c_str(), 650, 10, 20, DARKGRAY);
 	if (holding)
 	{
 		Vector2 start;

@@ -1,9 +1,14 @@
-def function hitBall(entity, startX, startY, endX, endY)
+function hitBall(ID, startX, startY, endX, endY)
+	local maxSpeed = 500
+	local vel = {}
+	vel.velocityX = 2.0 * (startX  - endX)
+	vel.velocityY = 2.0 * (startY  - endY)
+	local vectorLength = vel.velocityX * vel.velocityX + vel.velocityY * vel.velocityY
+	if (vectorLength > maxSpeed * maxSpeed ) then
+		vel.velocityX = vel.velocityX * (maxSpeed  / math.sqrt(vectorLength))
+		vel.velocityY = vel.velocityY * (maxSpeed  / math.sqrt(vectorLength))
+	end
 
-	-- CALCULATIONS FOR DIRECTION
-	xVel = math.max(startX - endX, 200)
-	yVel = math.max(startY - endY, 200)
-
-	scene.SetComponent(entity, "velocity", xVel, yVel)
-	scene.SetComponent(entity, "moveScript")
+	scene.SetComponent(ID, "velocity", vel)
+	scene.SetComponent(ID, "moveScript")
 end

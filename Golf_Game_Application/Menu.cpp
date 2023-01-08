@@ -22,7 +22,7 @@ Menu::Menu(lua_State* L)
 	std::string arg = "test UWU";
 
 	if (lua_pcall(L, 1, 0, 0, 0)) std::cout << "ERROR CREATE TILE MAP c++ ....\n";
-
+	lua_pop(L, 1);
 	Tilemap tilemap;
 	//tilemap.CreateTileMap(scene);
 	//tilemap.MapCounter();
@@ -38,7 +38,6 @@ CURRENTSTATE Menu::update()
 
 	inputClass.playerClick();
 	inputClass.checkCollision();
-	inputClass.handleMouseClick();
 
 	state = scene.Update(1.f / 144.f);
 	state = inputClass.wonHole();

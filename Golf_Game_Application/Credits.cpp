@@ -25,8 +25,8 @@ void Credits::render()
 
     DrawText("Press ESC to go to menu", 10, 10, 20, DARKGRAY);
     DrawText("Made by:", 10, 140, 30, DARKGRAY);
-    DrawText("Oliver Olguin Jönsson", 10, 170, 20, DARKGRAY);
-    DrawText("Morgan Westerberg", 10, 190, 20, DARKGRAY);
+    DrawText("Oliver O.J", 10, 170, 20, DARKGRAY);
+    DrawText("Morgan W", 10, 190, 20, DARKGRAY);
 
 
     EndDrawing();

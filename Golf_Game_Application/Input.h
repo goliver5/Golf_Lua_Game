@@ -18,6 +18,7 @@ private:
 	Scene* scenePtr;
 
 	int selectedEntity = -1;
+	int strokes = 0;
 
 public:
 	Input(lua_State* L);
