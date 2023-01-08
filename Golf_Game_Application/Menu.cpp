@@ -37,5 +37,6 @@ void Menu::render()
 	DrawText("Play game", 800 / 2 - 50, 450 / 4 - 50, 20, DARKGRAY);
 	DrawText("Exit Game", 800 / 2 - 240, 480 / 2 + 50, 20, DARKGRAY);
 	DrawText("Credits", 800 / 2 + 150, 480 / 2 + 50, 20, DARKGRAY);
+	DrawText("Editor", 800 / 2 - 130, 480 / 2 - 75, 20, DARKGRAY);
 	EndDrawing();
 }
