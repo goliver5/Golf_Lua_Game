@@ -14,8 +14,9 @@ for word in string.gmatch(temp, pattern) do
 end
 
 for i =0,14,1 do
+	print("")
 	for j=0,24,1 do
- 		nr = j + i *25
+ 		nr = (j+1) + i *25
 		--io.write("j: ",nr)
 		--io.write(result[nr])
 	end
@@ -42,10 +43,10 @@ startPositionX = 0.0
 
 	local id = scene.CreateEntity()
 	scene.SetComponent(id, "position", startPositionX, startPositionY)
-	scene.SetComponent(id, "mesh", 0, result[j+i*25])
+	scene.SetComponent(id, "mesh", 0, result[(j+1)+i*25])
 	scene.SetComponent(id, "tile")
-	if(tostring(result[j+i*25])  == tostring(1)) then scene.SetComponent(id, "wall") end
-	if( tostring(result[j+i*25])  == tostring(2)) then 
+	if(tostring(result[(j+1)+i*25])  == tostring(1)) then scene.SetComponent(id, "wall") end
+	if( tostring(result[(j+1)+i*25])  == tostring(2)) then 
 		scene.SetComponent(id, "hole", holeCounter) 
 		holeCounter = holeCounter + 1
 		--print(holeCounter) 
