@@ -55,10 +55,10 @@ bool RenderSystem::OnUpdate(entt::registry& registry, float delta)
             DrawCircleV(meshPosition, 10, clr);
         }
     );
-    DrawText("move the ball to Play Game and press A", 10, 10, 20, DARKGRAY);
-    DrawText("Play game", 800 / 2 - 40, 450 / 4 - 5, 20, DARKGRAY);
+
+
     inputClass->renderLine();
-    EndDrawing();
+    //EndDrawing();
 
     return false;
 }

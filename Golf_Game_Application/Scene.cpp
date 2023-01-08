@@ -105,9 +105,7 @@ void Scene::StackDump(lua_State* L)
 
 void Scene::UpdateSystems(float delta)
 {
-	inputClass.playerClick();
-	inputClass.checkCollision();
-
+	
 	for (auto it = m_systems.begin();
 		it != m_systems.end();)
 	{
@@ -121,6 +119,17 @@ void Scene::UpdateSystems(float delta)
 			it++;
 		}
 	}
+}
+
+CURRENTSTATE Scene::Update(float delta)
+{
+	CURRENTSTATE state = CURRENTSTATE::NOCHANGE;
+
+	inputClass.playerClick();
+	inputClass.checkCollision();
+	inputClass.handleMouseClick();
+	state = inputClass.wonHole();
+	return state;
 }
 
 void Scene::lua_openscene(lua_State* L, Scene* scene)

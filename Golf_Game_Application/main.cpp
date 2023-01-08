@@ -11,6 +11,8 @@
 #include "Menu.h"
 #include "Game.h"
 #include "EndScreen.h"
+#include "Credits.h"
+#include "Editor.h"
 #include "RightSystem.hpp"
 #include "Position.h"
 #include "VelocityData.h"
@@ -51,24 +53,13 @@ int main()
 
 	std::thread consoleThread(ConsoleThreadFunction, L);
 
+	InitWindow(800, 480, "Golf Game");
 
-	State* state = new Menu();
+	State* state = new Menu(L);
 	CURRENTSTATE currentState = CURRENTSTATE::NOCHANGE;
-
-	Scene scene(L);
-	scene.lua_openscene(L, &scene);
-
-	if (luaL_dofile(L, "test.lua")) std::cout << "WRONG\n";
-
-
-	Tilemap tilemap;
-	//tilemap.CreateTileMap(scene);
-	//tilemap.MapCounter();
 
 	while (state != nullptr)
 	{
-		scene.UpdateSystems(1.f/144.f);
-
 		switch (currentState)
 		{
 		case CURRENTSTATE::NOCHANGE:
@@ -81,7 +72,7 @@ int main()
 			break;
 		case CURRENTSTATE::MENU:
 			delete state;
-			state = new Menu();
+			state = new Menu(L);
 			currentState = CURRENTSTATE::NOCHANGE;
 			break;
 		case CURRENTSTATE::GAME:
@@ -94,61 +85,23 @@ int main()
 			state = new EndScreen();
 			currentState = CURRENTSTATE::NOCHANGE;
 			break;
+		case CURRENTSTATE::CREDITS:
+			delete state;
+			state = new Credits();
+			currentState = CURRENTSTATE::NOCHANGE;
+			break;
+		case CURRENTSTATE::EDITOR:
+			delete state;
+			state = new Editor(L);
+			currentState = CURRENTSTATE::NOCHANGE;
+			break;
 		default:
 			break;
 		}
 	}
 
-	//bool running = true;
-	//while (running)
-	//{
-	//	//Update Game
-	//	//Render Game
-	//	std::cout << "[C++] Update" << std::endl;
-	//}
-
-
-
-	//entt::registry registry;
-
-	//entt::entity entity = registry.create();
-
-	//struct Physics
-	//{
-	//	float VelocityY;
-	//	float GravityFactorY;
-	//};
-
-	//struct Position
-	//{
-	//	float Y;
-	//};
-
-	//registry.emplace<Position>(entity, 100.f);
-	//registry.emplace<Physics>(entity, 0.f, -9.82f);
-
-	//auto view = registry.view<Position, Physics>();
-
-	//float delta = 0.001254f;
-	//int count = 0;
-
-	//for (int i = 0; i < 5; i++)
-	//{
-	//	view.each([&](Position& position, Physics& physics)
-	//		{
-	//			position.Y += physics.VelocityY * delta; //Change to delta
-	//			physics.VelocityY += physics.GravityFactorY * delta; //Change to delta
-	//			count++;
-	//		}
-	//	);
-
-
-	//	Position& position = registry.get<Position>(entity);
-	//	std::cout << "Position: " << position.Y << std::endl;
-	//	std::getchar();
-	//}
-	//
-
-	//std::cout << "Count: " << count << std::endl;
+	consoleThread.detach();
+	lua_close(L);
+	CloseWindow();
 	return 0;
 }

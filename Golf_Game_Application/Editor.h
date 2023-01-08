@@ -1,19 +1,18 @@
 #pragma once
 #include "State.h"
 #include "raylib.h"
-#include "Scene.h"
 #include "Tilemap.h"
 
-class Menu : public State
+class Editor : public State
 {
 private:
-	const int screenWidth = 800;
-	const int screenHeight = 480;
+	Tilemap tileMap;
+	lua_State* L;
 	Scene scene;
 
 public:
-	Menu(lua_State* L);
-	~Menu();
+	Editor(lua_State* L);
+	~Editor();
 
 	// Inherited via State
 	virtual CURRENTSTATE update() override;

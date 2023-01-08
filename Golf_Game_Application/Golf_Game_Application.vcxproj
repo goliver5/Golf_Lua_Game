@@ -165,6 +165,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CollsionSystem.cpp" />
+    <ClCompile Include="Credits.cpp" />
+    <ClCompile Include="Editor.cpp" />
     <ClCompile Include="EndScreen.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Input.cpp" />
@@ -179,8 +181,11 @@
   <ItemGroup>
     <ClInclude Include="CollisionComponent.h" />
     <ClInclude Include="CollsionSystem.h" />
+    <ClInclude Include="Credits.h" />
+    <ClInclude Include="Editor.h" />
     <ClInclude Include="EndScreen.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="HoleComponent.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="LuaExtraFunctions.h" />
     <ClInclude Include="Menu.h" />
@@ -189,6 +194,8 @@
     <ClInclude Include="PlayerComponent.h" />
     <ClInclude Include="Position.h" />
     <ClInclude Include="RenderSystem.h" />
+    <ClInclude Include="TextureBank.h" />
+    <ClInclude Include="TileComponent.h" />
     <ClInclude Include="Tilemap.h" />
     <ClInclude Include="VelocityData.h" />
     <ClInclude Include="RightSystem.hpp" />
