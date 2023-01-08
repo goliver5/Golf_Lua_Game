@@ -9,6 +9,7 @@ private:
 	Tilemap tileMap;
 	lua_State* L;
 	Scene scene;
+	Input inputClass;
 
 public:
 	Editor(lua_State* L);

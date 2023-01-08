@@ -20,10 +20,11 @@ private:
 	int selectedEntity = -1;
 
 public:
-	Input(entt::registry* registry, lua_State* L);
+	Input(lua_State* L);
 	~Input();
 
 	CURRENTSTATE wonHole();
+	void setRegistry(entt::registry* registry);
 	void handleMouseClick();
 	void playerClick();
 	void checkCollision();

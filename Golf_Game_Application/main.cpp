@@ -75,7 +75,7 @@ int main()
 			break;
 		case CURRENTSTATE::GAME:
 			delete state;
-			state = new Game();
+			state = new Game(L);
 			currentState = CURRENTSTATE::NOCHANGE;
 			break;
 		case CURRENTSTATE::ENDSCREEN:

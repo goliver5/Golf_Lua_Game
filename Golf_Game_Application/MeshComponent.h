@@ -11,12 +11,12 @@ enum EntityMesh
 struct MeshComponent
 {
 	EntityMesh usingMesh;
-
+	int meshNumber;
 	Texture2D texture;
 
-	MeshComponent(Texture2D tex, int mesh = 0)
+	MeshComponent(Texture2D tex, int meshNr = -1, int mesh = 0)
 	{
-		
+		this->meshNumber = meshNr;
 		this->usingMesh = (EntityMesh)mesh;
 		//std::cout << "mesh NR: " << this->usingMesh << "\n";
 		//std::cout << "Loading texture: " << fileName << std::endl;

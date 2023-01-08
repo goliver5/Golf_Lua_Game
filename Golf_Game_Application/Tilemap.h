@@ -41,5 +41,5 @@ public:
 
 	bool CreateTileMap(Scene& scene);
 	void MapCounter();
-	void writeLevelToFile(std::string fileName = "level1.txt");
+	void writeLevelToFile(std::vector<int> tileIds, std::string fileName = "level1.txt");
 };

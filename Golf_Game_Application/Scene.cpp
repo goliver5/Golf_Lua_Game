@@ -11,13 +11,10 @@
 #include "HoleComponent.h"
 
 Scene::Scene(lua_State* L)
-	:inputClass(Input(&registry, L))
 {
 	this->luaState = L;
-	RenderSystem* rSys = new RenderSystem(L);
-	rSys->addInputClass(&inputClass);
 	m_systems.push_back(new RightSystem(L));
-	m_systems.push_back(rSys);
+	
 	m_systems.push_back(new CollisionSystem(L));
 
 	Texture2D tmp;
@@ -38,6 +35,18 @@ Scene::~Scene()
 	}
 }
 
+entt::registry* Scene::getRegistry()
+{
+	return &registry;
+}
+
+void Scene::addInputClassToRenderSystem(Input* input)
+{
+	RenderSystem* rSys = new RenderSystem(this->luaState);
+	rSys->addInputClass(input);
+	m_systems.push_back(rSys);
+}
+
 int Scene::GetEntityCount()
 {
 	return registry.alive();
@@ -51,6 +60,30 @@ int Scene::CreateEntity()
 bool Scene::IsEntity(int entity)
 {
 	return registry.valid((entt::entity)entity);
+}
+
+std::vector<int> Scene::GetTileIds()
+{
+	auto view = registry.view<TileComponent, MeshComponent>();
+	int tmp = 0;
+	//its reversed
+	std::vector<int> tilevalues;
+
+	view.each([&](TileComponent& tile,MeshComponent& mesh)
+		{
+			
+			tilevalues.push_back(mesh.meshNumber);
+		}
+	);
+	std::vector<int> actualTileIds;
+	for (int i = tilevalues.size() - 1; i >= 0; i--)
+	{
+		tmp++;
+		std::cout << tilevalues[i] << ", ";
+		if (tmp % 25 == 0)std::cout << std::endl;
+		actualTileIds.push_back(tilevalues[i]);
+	}
+	return actualTileIds;
 }
 
 void Scene::RemoveEntity(int entity)
@@ -128,10 +161,7 @@ CURRENTSTATE Scene::Update(float delta)
 {
 	CURRENTSTATE state = CURRENTSTATE::NOCHANGE;
 
-	inputClass.playerClick();
-	inputClass.checkCollision();
-	inputClass.handleMouseClick();
-	state = inputClass.wonHole();
+	
 	return state;
 }
 
@@ -150,6 +180,7 @@ void Scene::lua_openscene(lua_State* L, Scene* scene)
 		{ "RemoveComponent", lua_RemoveComponent },
 		{ "StackDump", lua_StackDump },
 		{ "CreateTileMap", lua_CreateTileMap },
+		{ "DestroyTileMap", lua_DestroyTileMap },
 		{ NULL, NULL }
 	};
 	lua_pushlightuserdata(L, scene);
@@ -340,7 +371,7 @@ int Scene::lua_SetComponent(lua_State* L)
 		int whichMesh = (int)lua_tointeger(L, 4);
 
 		
-		scene->SetComponent<MeshComponent>(entity, scene->textureContainer.textures[whichMesh], meshEnumValue);
+		scene->SetComponent<MeshComponent>(entity, scene->textureContainer.textures[whichMesh],whichMesh , meshEnumValue);
 		return 1;
 	}
 	else if (type == "velocity")
@@ -527,6 +558,33 @@ int Scene::lua_CreateTileMap(lua_State* L)
 	//{
 	//	scene->lua_StackDump(L);
 	//}
+
+	return 0;
+}
+
+int Scene::lua_DestroyTileMap(lua_State* L)
+{
+	Scene* scene = lua_GetSceneUpValue(L);
+	std::cout << "destroying tilemap\n";
+
+	auto view = scene->registry.view<TileComponent>();
+	int tmp = 0;
+	std::vector<int> tileIds;
+
+	view.each([&](TileComponent& tile)
+		{
+
+			tileIds.push_back(tile.entityID);
+			scene->RemoveEntity(tile.entityID);
+		}
+	);
+	std::vector<int> actualTileIds;
+	for (int i = tileIds.size()-1; i >= 0; i--)
+	{
+		tmp++;
+			std::cout << tileIds[i] << ", ";
+			if (tmp % 25 == 0)std::cout << std::endl;
+	}
 
 	return 0;
 }

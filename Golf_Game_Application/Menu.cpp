@@ -2,7 +2,7 @@
 #include <iostream>
 
 Menu::Menu(lua_State* L)
-	:scene(Scene(L))
+	:scene(Scene(L)), inputClass(Input(L))
 {
 	if (!IsWindowReady()) InitWindow(screenWidth, screenHeight, "Golf Game");
 	SetTargetFPS(144);
@@ -11,6 +11,17 @@ Menu::Menu(lua_State* L)
 
 	scene.lua_openscene(L, &scene);
 	if (luaL_dofile(L, "test.lua")) std::cout << "WRONG\n";
+	scene.addInputClassToRenderSystem(&inputClass);
+	inputClass.setRegistry(scene.getRegistry());
+
+	if (luaL_dofile(L, "createTileMap.lua")) std::cout << "CREATE TILE MAP ERROR\n";
+
+	lua_getglobal(L, "CreateTileMap");
+	lua_pushvalue(L, -1);
+	lua_pushstring(L, "menu.glf");
+	std::string arg = "test UWU";
+
+	if (lua_pcall(L, 1, 0, 0, 0)) std::cout << "ERROR CREATE TILE MAP c++ ....\n";
 
 	Tilemap tilemap;
 	//tilemap.CreateTileMap(scene);
@@ -24,8 +35,13 @@ Menu::~Menu()
 CURRENTSTATE Menu::update()
 {
 	CURRENTSTATE state = CURRENTSTATE::NOCHANGE;
-	
+
+	inputClass.playerClick();
+	inputClass.checkCollision();
+	inputClass.handleMouseClick();
+
 	state = scene.Update(1.f / 144.f);
+	state = inputClass.wonHole();
 	scene.UpdateSystems(1.f/144.f);
 
 	return state;

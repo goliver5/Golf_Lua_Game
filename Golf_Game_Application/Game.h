@@ -1,14 +1,16 @@
 #pragma once
 #include "State.h"
 #include "raylib.h"
+#include "Scene.h"
 
 class Game : public State
 {
 private:
-	Vector2 ballPosition;
-
+	lua_State* L;
+	Scene scene;
+	Input inputClass;
 public:
-	Game();
+	Game(lua_State* L);
 	~Game();
 
 	// Inherited via State

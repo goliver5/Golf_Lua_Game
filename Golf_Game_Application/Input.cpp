@@ -8,10 +8,9 @@
 #include "TileComponent.h"
 #include "Scene.h"
 
-Input::Input(entt::registry* registry, lua_State* L)
+Input::Input(lua_State* L)
 	:playerID(0), holding(false)
 {
-	this->r = registry;
 	this->savedPos.x = 0.f;
 	this->savedPos.y = 0.f;
 	this->L = L;
@@ -50,6 +49,11 @@ CURRENTSTATE Input::wonHole()
 		}
 	);
 	return state;
+}
+
+void Input::setRegistry(entt::registry* registry)
+{
+	this->r = registry;
 }
 
 void Input::handleMouseClick()

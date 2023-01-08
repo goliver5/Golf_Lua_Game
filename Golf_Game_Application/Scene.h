@@ -17,7 +17,6 @@ class Scene
 	entt::registry registry;
 	lua_State* luaState;
 	std::vector<System*> m_systems;
-	Input inputClass;
 	textures textureContainer;
 
 public:
@@ -28,6 +27,9 @@ public:
 public:
 	//C++ Functions
 
+	entt::registry* getRegistry();
+	void addInputClassToRenderSystem(Input* input);
+
 	//returns nr of entities
 	int GetEntityCount();
 
@@ -35,6 +37,8 @@ public:
 
 	//checks if the entity is valid
 	bool IsEntity(int entity);
+
+	std::vector<int> GetTileIds();
 
 	void RemoveEntity(int entity);
 	
@@ -79,6 +83,7 @@ private:
 	static int lua_StackDump(lua_State* L);
 
 	static int lua_CreateTileMap(lua_State* L);
+	static int lua_DestroyTileMap(lua_State* L);
 
 	static int RefAndPushBehaviour(lua_State* L, int entity, const char* path);
 };

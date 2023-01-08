@@ -10,6 +10,7 @@ private:
 	const int screenWidth = 800;
 	const int screenHeight = 480;
 	Scene scene;
+	Input inputClass;
 
 public:
 	Menu(lua_State* L);

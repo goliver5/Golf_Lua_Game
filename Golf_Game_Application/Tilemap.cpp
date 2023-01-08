@@ -62,7 +62,7 @@ bool Tilemap::CreateTileMap(Scene& scene)
 			else if (tileNumber == TileMesh::HOLE)
 			{
 				tileType = "../Sprites/hole1.png";
-				scene.SetComponent<HoleComponent>(entity, holeCounter++);
+				//scene.SetComponent<HoleComponent>(entity, holeCounter++);
 			}
 
 			// 0 as middle arg because we only need squares for tilemap
@@ -102,7 +102,7 @@ void Tilemap::MapCounter()
 	std::cout << "\nEND TILES\n";
 }
 
-void Tilemap::writeLevelToFile(std::string fileName)
+void Tilemap::writeLevelToFile(std::vector<int> tileIds, std::string fileName)
 {
 	std::ofstream file;
 	file.open(fileName);
@@ -112,7 +112,7 @@ void Tilemap::writeLevelToFile(std::string fileName)
 		{
 			for (int j = 0; j < WIDTH; j++)
 			{
-				file << tileMap[j + i * WIDTH];
+				file << tileIds[j + i * WIDTH];
 				if (j - 1 < WIDTH) file << " ";
 			}
 			if (i < HEIGHT - 1) file << "\n";
