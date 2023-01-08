@@ -4,19 +4,22 @@ function CreateTileMap(fileName)
 
 local file = io.open(fileName, "r")
 
+
 result = {}
 pattern = "%S+"
-for i=1,10,1 do
-	local temp = file:read("l")
-	for word in string.gmatch(temp, pattern) do
+
+for i = 0,14,1 do
+local temp = file:read("l")
+for word in string.gmatch(temp, pattern) do
  	 table.insert(result, word)
 	end
 end
 
-for i =0,9,1 do
+for i =1,14,1 do
 print(" ")
-	for j=0,9,1 do
- 		nr = j+i*10
+	for j=1,24,1 do
+ 		nr = j + i *25
+		--io.write("j: ",j)
 		io.write(result[nr + 1])
 	end
 end
@@ -28,16 +31,17 @@ offset = 32.0
 startPositionX = 0.0
 startPositionY = 0.0
 
-for i=0,9,1 do
+for i=0, 14, 1 do
 
-print(" ")
+--print(" ")
 startPositionX = 0.0
-	for j=0,9,1 do
+	for j=0, 24, 1 do
 
 	id = scene.CreateEntity()
 	scene.SetComponent(id, "position", startPositionX, startPositionY)
-	scene.SetComponent(id, "mesh", 0)
-	io.write("x: ",startPositionX, " y: ", startPositionY , ", ")
+	scene.SetComponent(id, "mesh", 0, result[j+i*25])
+	--if(result[j+i*25]  == 1) do scene.SetComponent(id,0)
+	--io.write("x: ",startPositionX, " y: ", startPositionY , ", ")
 	startPositionX = startPositionX + offset
 	end
 startPositionY = startPositionY + offset

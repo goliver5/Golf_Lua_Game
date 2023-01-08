@@ -20,7 +20,9 @@ Scene::Scene(lua_State* L)
 	Texture2D tmp;
 	tmp = LoadTexture("../Sprites/ground.png");
 	textureContainer.textures.push_back(tmp);
-	tmp = LoadTexture("../Sprites/tileTest.png");
+	tmp = LoadTexture("../Sprites/wall.png");
+	textureContainer.textures.push_back(tmp);
+	tmp = LoadTexture("../Sprites/hole.png");
 	textureContainer.textures.push_back(tmp);
 }
 
@@ -166,7 +168,7 @@ int Scene::lua_CreateEntity(lua_State* L)
 	Scene* scene = lua_GetSceneUpValue(L);
 	int entity = scene->CreateEntity();
 	lua_pushinteger(L, entity);
-	std::cout << "Created Entity: " << entity << std::endl;
+	//std::cout << "Created Entity: " << entity << std::endl;
 	return 1;
 }
 
@@ -311,10 +313,13 @@ int Scene::lua_SetComponent(lua_State* L)
 		{
 			scene->RemoveComponent<MeshComponent>(entity);
 		}
+		//Enum if circle or square
 		int meshEnumValue = (int)lua_tointeger(L, 3);
+		//value of the mesh in textureContainer
+		int whichMesh = (int)lua_tointeger(L, 4);
 
 		
-		scene->SetComponent<MeshComponent>(entity, scene->textureContainer.textures[0], meshEnumValue);
+		scene->SetComponent<MeshComponent>(entity, scene->textureContainer.textures[whichMesh], meshEnumValue);
 		return 1;
 	}
 	else if (type == "velocity")
