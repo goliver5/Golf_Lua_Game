@@ -6,12 +6,18 @@
 #include "RenderSystem.h"
 #include "Input.h"
 
+struct textures
+{
+	std::vector<Texture2D> textures;
+};
+
 class Scene
 {
 	entt::registry registry;
 	lua_State* luaState;
 	std::vector<System*> m_systems;
 	Input inputClass;
+	textures textureContainer;
 
 public:
 

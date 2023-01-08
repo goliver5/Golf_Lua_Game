@@ -57,7 +57,7 @@ bool Tilemap::CreateTileMap(Scene& scene)
 			}
 
 			// 0 as middle arg because we only need squares for tilemap
-			scene.SetComponent<MeshComponent>(entity, 0, tileType);
+			//scene.SetComponent<MeshComponent>(entity, 0);
 			
 			std::cout << ", X: " << startposX << " Y: " << startposY;
 

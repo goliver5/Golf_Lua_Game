@@ -45,6 +45,7 @@ void ConsoleThreadFunction(lua_State* L)
 
 int main()
 {
+	InitWindow(800, 480, "Golf Game");
 	lua_State* L = luaL_newstate();
 	luaL_openlibs(L);
 
@@ -58,28 +59,11 @@ int main()
 	scene.lua_openscene(L, &scene);
 
 	if (luaL_dofile(L, "test.lua")) std::cout << "WRONG\n";
-	/*scene.CreateEntity();
-
-	Position p("uwu", 3, 0,0,0);
-	rightData r;
-
-	scene.SetComponent<Position>(0, p);*/
-
-	//entt::registry registry;
-
-	//entt::entity entity = registry.create();
-
-	//registry.emplace<Position>(entity, 100, 100, 100);
-	//registry.emplace<rightData>(entity);
-
-	//System* rSus = new RightSystem(20);
-
-	//rSus->OnUpdate(registry, 0.2f);
 
 
 	Tilemap tilemap;
-	tilemap.CreateTileMap(scene);
-	tilemap.MapCounter();
+	//tilemap.CreateTileMap(scene);
+	//tilemap.MapCounter();
 
 	while (state != nullptr)
 	{

@@ -16,6 +16,12 @@ Scene::Scene(lua_State* L)
 	m_systems.push_back(new RightSystem(L));
 	m_systems.push_back(rSys);
 	m_systems.push_back(new CollisionSystem(L));
+
+	Texture2D tmp;
+	tmp = LoadTexture("../Sprites/ground.png");
+	textureContainer.textures.push_back(tmp);
+	tmp = LoadTexture("../Sprites/tileTest.png");
+	textureContainer.textures.push_back(tmp);
 }
 
 Scene::~Scene()
@@ -306,8 +312,9 @@ int Scene::lua_SetComponent(lua_State* L)
 			scene->RemoveComponent<MeshComponent>(entity);
 		}
 		int meshEnumValue = (int)lua_tointeger(L, 3);
-		std::cout << "LIGAM\n";
-		scene->SetComponent<MeshComponent>(entity, meshEnumValue);
+
+		
+		scene->SetComponent<MeshComponent>(entity, scene->textureContainer.textures[0], meshEnumValue);
 		return 1;
 	}
 	else if (type == "velocity")
@@ -430,12 +437,15 @@ int Scene::lua_StackDump(lua_State* L)
 int Scene::lua_CreateTileMap(lua_State* L)
 {
 	Scene* scene = lua_GetSceneUpValue(L);
+	std::string fileName = lua_tostring(L, 1);
 
 	//int luaTableRef = RefAndPushBehaviour(L, 69, "createTileMap.lua");
 
 	if (luaL_dofile(L, "createTileMap.lua")) std::cout << "CREATE TILE MAP ERROR\n";
 	
 	lua_getglobal(L, "CreateTileMap");
+	lua_pushvalue(L, -1);
+	lua_pushstring(L, fileName.c_str());
 	std::string arg = "test UWU";
 	//lua_pushstring(L,"TEST UWU");
 

@@ -14,10 +14,15 @@ struct MeshComponent
 
 	Texture2D texture;
 
-	MeshComponent(int mesh = 0, std::string fileName = "../Sprites/tileTest.png")
+	MeshComponent(Texture2D tex, int mesh = 0)
 	{
+		
 		this->usingMesh = (EntityMesh)mesh;
 		std::cout << "mesh NR: " << this->usingMesh << "\n";
-		texture = LoadTexture(fileName.c_str());
+		//std::cout << "Loading texture: " << fileName << std::endl;
+		
+		//if (texture.id <= 0) std::cout << "Failed texture my check UWU nuzzle \n";
+
+		texture = tex;
 	}
 };

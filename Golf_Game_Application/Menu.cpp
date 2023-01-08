@@ -3,7 +3,6 @@
 
 Menu::Menu()
 {
-	InitWindow(screenWidth, screenHeight, "Golf Game");
 	SetTargetFPS(144);
 
 	std::cout << "\n----------------------------\nLua console:\n\n";
