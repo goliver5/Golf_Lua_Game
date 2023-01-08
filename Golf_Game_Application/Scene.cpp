@@ -11,7 +11,7 @@
 #include "HoleComponent.h"
 
 Scene::Scene(lua_State* L)
-	:inputClass(Input(&registry))
+	:inputClass(Input(&registry, L))
 {
 	this->luaState = L;
 	RenderSystem* rSys = new RenderSystem(L);
@@ -225,6 +225,14 @@ int Scene::lua_HasComponent(lua_State* L)
 		hasComponent =
 			scene->HasComponents<PlayerComponent>(entity);
 	}
+	else if (type == "wall") {
+		hasComponent =
+			scene->HasComponents<WallComponent>(entity);
+	}
+	else if (type == "hole") {
+		hasComponent =
+			scene->HasComponents<HoleComponent>(entity);
+	}
 	lua_pushboolean(L, hasComponent);
 	return 1;
 }
@@ -324,6 +332,7 @@ int Scene::lua_SetComponent(lua_State* L)
 		if (scene->HasComponents<MeshComponent>(entity))
 		{
 			scene->RemoveComponent<MeshComponent>(entity);
+			std::cout << "REMOVED MESH\n";
 		}
 		//Enum if circle or square
 		int meshEnumValue = (int)lua_tointeger(L, 3);

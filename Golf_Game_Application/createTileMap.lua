@@ -58,7 +58,14 @@ end
 
 --Used to change a specific tile to another type
 function ChangeTile(Id, type)
-
-
+	a = scene.HasComponent(id, "wall")
+	print(Id .. type)
+	if (scene.HasComponent(Id, "wall")) then print("HAS COMPOENENT") scene.RemoveComponent(Id, "wall") end
+	if (scene.HasComponent(Id, "hole")) then scene.RemoveComponent(Id, "hole") end
+	scene.SetComponent(Id, type)
+	newMesh = 0
+	if (tostring(type) == "wall") then newMesh = 1 end
+	if (tostring(type) == "hole") then newMesh = 2 end
+	scene.SetComponent(Id, "mesh", 0, newMesh)
 		
 end

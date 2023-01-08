@@ -6,13 +6,15 @@
 #include "WallComponent.h"
 #include "HoleComponent.h"
 #include "TileComponent.h"
+#include "Scene.h"
 
-Input::Input(entt::registry* registry)
+Input::Input(entt::registry* registry, lua_State* L)
 	:playerID(0), holding(false)
 {
 	this->r = registry;
 	this->savedPos.x = 0.f;
 	this->savedPos.y = 0.f;
+	this->L = L;
 }
 
 Input::~Input()
@@ -73,16 +75,42 @@ void Input::handleMouseClick()
 	if (this->selectedEntity > -1 && IsKeyPressed(KEY_Q))
 	{
 		std::cout << "CHANGE TILE COMPONENT TO 0\n";
+		if (luaL_dofile(L, "createTileMap.lua")) std::cout << "CREATE TILE MAP ERROR\n";
+
+		lua_getglobal(L, "ChangeTile");
+		lua_pushvalue(L, -1);
+		lua_pushnumber(L, this->selectedEntity);
+		lua_pushstring(L, "");
+		//lua_pushstring(L,"TEST UWU");
+
+		if (lua_pcall(L, 2, 0, 0, 0)) std::cout << "ERROR CREATE TILE MAP c++ ....\n";
 		this->selectedEntity = -1;
 	}
 	if (this->selectedEntity > -1 && IsKeyPressed(KEY_W))
 	{
 		std::cout << "CHANGE TILE COMPONENT TO 1\n";
+		if (luaL_dofile(L, "createTileMap.lua")) std::cout << "CREATE TILE MAP ERROR\n";
+		
+		lua_getglobal(L, "ChangeTile");
+		lua_pushvalue(L, -1);
+		lua_pushnumber(L, this->selectedEntity);
+		lua_pushstring(L, "wall");
+		//lua_pushstring(L,"TEST UWU");
+		
+		if (lua_pcall(L, 2, 0, 0, 0)) std::cout << "ERROR CREATE TILE MAP c++ ....\n";
 		this->selectedEntity = -1;
 	}
 	if (this->selectedEntity > -1 && IsKeyPressed(KEY_E))
 	{
 		std::cout << "CHANGE TILE COMPONENT TO 2\n";
+		if (luaL_dofile(L, "createTileMap.lua")) std::cout << "CREATE TILE MAP ERROR\n";
+
+		lua_getglobal(L, "ChangeTile");
+		lua_pushvalue(L, -1);
+		lua_pushnumber(L, this->selectedEntity);
+		lua_pushstring(L, "hole");
+
+		if (lua_pcall(L, 2, 0, 0, 0)) std::cout << "ERROR CREATE TILE MAP c++ ....\n";
 		this->selectedEntity = -1;
 	}
 }
