@@ -4,7 +4,7 @@ function CreateTileMap(fileName)
 
 local file = io.open(fileName, "r")
 
-result = {}
+local result = {}
 pattern = "%S+"
 for i = 0,14,1 do
 local temp = file:read("l")
@@ -14,7 +14,6 @@ for word in string.gmatch(temp, pattern) do
 end
 
 for i =0,14,1 do
---print("")
 	for j=0,24,1 do
  		nr = j + i *25
 		--io.write("j: ",nr)
@@ -27,8 +26,8 @@ file:close()
 offset = 32.0
 
 --where we start making tiles from
-startPositionX = 0.0
-startPositionY = 0.0
+local startPositionX = 0.0
+local startPositionY = 0.0
 
 local holeCounter = 0
 

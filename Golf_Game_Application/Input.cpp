@@ -22,7 +22,7 @@ Input::~Input()
 {
 }
 
-CURRENTSTATE Input::wonHole()
+CURRENTSTATE Input::wonHole(int* playerStrokes)
 {
 	CURRENTSTATE state = CURRENTSTATE::NOCHANGE;
 
@@ -47,6 +47,7 @@ CURRENTSTATE Input::wonHole()
 				else if (holeComp.state == 1) state = CURRENTSTATE::EDITOR;
 				else if (holeComp.state == 2) state = CURRENTSTATE::EXIT;
 				else state = CURRENTSTATE::CREDITS;
+				if (playerStrokes != nullptr) *playerStrokes = strokes;
 				strokes = 0;
 			}
 		}
@@ -154,45 +155,6 @@ void Input::playerClick()
 		holding = false;
 		strokes++;
 	}
-}
-
-void Input::checkCollision()
-{
-	auto view = r->view<Position, WallComponent, TileComponent>();
-	Vector2 playerPos;
-	playerPos.x = this->r->get<Position>((entt::entity)playerID).posX;
-	playerPos.y = this->r->get<Position>((entt::entity)playerID).posY;
-
-	Rectangle rec;
-	view.each([&](Position& pos, WallComponent& wallComp, TileComponent& tileComp)
-		{
-			Vector2 entityPos;
-			rec.height = tileComp.height;
-			rec.width = tileComp.width;
-			rec.x = pos.posX;// - rec.height / 2.f;
-			rec.y = pos.posY;// - rec.width / 2.f;
-
-			if (rec.x == playerPos.x && rec.y == playerPos.y);
-			else if (CheckCollisionCircleRec(playerPos, 10, rec))
-			{
-				CollisionComponent col(0, 0, false, false);
-
-				//Checks vector from player position to center of rectangle
-				if (abs(playerPos.x - (rec.x + rec.width / 2)) < abs(playerPos.y - (rec.y + rec.height / 2)))
-				{
-					col.y = true;
-				}
-				else
-				{
-					col.x = true;
-				}
-
-				r->emplace_or_replace<CollisionComponent>((entt::entity)playerID, col);
-			}
-		}
-	);
-
-	
 }
 
 void Input::renderLine()

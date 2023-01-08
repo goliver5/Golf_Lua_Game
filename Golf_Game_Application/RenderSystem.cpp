@@ -16,7 +16,6 @@ void RenderSystem::addInputClass(Input* inputClass)
 
 bool RenderSystem::OnUpdate(entt::registry& registry, float delta)
 {
-    //auto view = registry.view<rightData, Position>();
     auto view = registry.view<Position, MeshComponent>();
 
     BeginDrawing();
@@ -58,7 +57,6 @@ bool RenderSystem::OnUpdate(entt::registry& registry, float delta)
 
 
     inputClass->renderLine();
-    //EndDrawing();
 
     return false;
 }

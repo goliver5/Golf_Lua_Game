@@ -194,7 +194,6 @@
     <ClInclude Include="PlayerComponent.h" />
     <ClInclude Include="Position.h" />
     <ClInclude Include="RenderSystem.h" />
-    <ClInclude Include="TextureBank.h" />
     <ClInclude Include="TileComponent.h" />
     <ClInclude Include="Tilemap.h" />
     <ClInclude Include="VelocityData.h" />

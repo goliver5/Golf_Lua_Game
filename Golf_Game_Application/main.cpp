@@ -50,6 +50,7 @@ int main()
 	InitWindow(800, 480, "Golf Game");
 	lua_State* L = luaL_newstate();
 	luaL_openlibs(L);
+	int playerStrokes = 0;
 
 	std::thread consoleThread(ConsoleThreadFunction, L);
 
@@ -75,12 +76,12 @@ int main()
 			break;
 		case CURRENTSTATE::GAME:
 			delete state;
-			state = new Game(L);
+			state = new Game(L, &playerStrokes);
 			currentState = CURRENTSTATE::NOCHANGE;
 			break;
 		case CURRENTSTATE::ENDSCREEN:
 			delete state;
-			state = new EndScreen();
+			state = new EndScreen(playerStrokes);
 			currentState = CURRENTSTATE::NOCHANGE;
 			break;
 		case CURRENTSTATE::CREDITS:

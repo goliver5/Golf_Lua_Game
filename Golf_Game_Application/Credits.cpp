@@ -12,7 +12,6 @@ Credits::~Credits()
 
 CURRENTSTATE Credits::update()
 {
-    //std::cout << "Game state!\n";
     if (IsKeyPressed(KEY_ESCAPE)) return CURRENTSTATE::MENU;
     return CURRENTSTATE::NOCHANGE;
 }

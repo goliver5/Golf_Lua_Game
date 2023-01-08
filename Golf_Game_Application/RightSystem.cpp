@@ -27,7 +27,6 @@ bool RightSystem::OnUpdate(entt::registry& registry, float delta)
             lua_pushinteger(L, script.entity);
             lua_setfield(L, -2, "ID");
 
-            //std::cout << "awdawwadwwa\n";
             lua_getfield(L, -1, "OnUpdate");
             lua_pushvalue(L, -2);
             lua_pushnumber(L, delta);
@@ -38,9 +37,6 @@ bool RightSystem::OnUpdate(entt::registry& registry, float delta)
             
             lua_pop(L, 1);
             lua_pop(L, 1);
-            //while (lua_gettop(L) > 0) lua_pop(L, 1);
-            //dump(L);
-            //pos.posX += rightdata.speedX;
         }
     );
 

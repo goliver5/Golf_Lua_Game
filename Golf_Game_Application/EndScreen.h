@@ -4,10 +4,10 @@
 class EndScreen : public State
 {
 private:
-
+	int strokes;
 
 public:
-	EndScreen();
+	EndScreen(int strokes);
 	~EndScreen();
 
 	// Inherited via State

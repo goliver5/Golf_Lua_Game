@@ -24,10 +24,9 @@ public:
 	Input(lua_State* L);
 	~Input();
 
-	CURRENTSTATE wonHole();
+	CURRENTSTATE wonHole(int* playerStrokes = nullptr);
 	void setRegistry(entt::registry* registry);
 	void handleMouseClick();
 	void playerClick();
-	void checkCollision();
 	void renderLine();
 };

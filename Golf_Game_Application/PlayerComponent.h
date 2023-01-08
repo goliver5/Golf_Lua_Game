@@ -2,6 +2,7 @@
 
 struct PlayerComponent
 {
+	int playerID = 0;
 	float r;
 	float g;
 	float b;

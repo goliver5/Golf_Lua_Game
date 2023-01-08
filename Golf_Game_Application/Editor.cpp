@@ -12,8 +12,6 @@ Editor::Editor(lua_State* L)
     lua_getglobal(L, "CreateTileMap");
     lua_pushvalue(L, -1);
     lua_pushstring(L, "level1.glf");
-    std::string arg = "test UWU";
-    //lua_pushstring(L,"TEST UWU");
 
     if (lua_pcall(L, 1, 0, 0, 0)) std::cout << "ERROR CREATE TILE MAP c++ ....\n";
     lua_pop(L, 1);
@@ -28,7 +26,6 @@ CURRENTSTATE Editor::update()
     inputClass.handleMouseClick();
     if (IsKeyPressed(KEY_S))
     {
-        //Add logic for saving
         std::cout << "SAVED FILE\n";
         tileMap.writeLevelToFile(scene.GetTileIds(), "level1.glf");
     }
