@@ -5,8 +5,6 @@
 #include "State.h"
 #include "lua.hpp"
 
-class Scene;
-
 class Input
 {
 private:
@@ -15,7 +13,6 @@ private:
 	Vector2 savedPos;
 	lua_State* L;
 	bool holding;
-	Scene* scenePtr;
 
 	int selectedEntity = -1;
 	int strokes = 0;

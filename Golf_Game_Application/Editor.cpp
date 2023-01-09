@@ -40,6 +40,6 @@ CURRENTSTATE Editor::update()
 void Editor::render()
 {
     scene.UpdateSystems(1.f/144.f);
-    DrawText("Editor mode\nPress Mouse button to select a tile\nWhen selected, press Q, W or R to change the tile type\nPress S to save level\nESC to go back to menu", 10, 10, 20.f, WHITE);
+    DrawText("Editor mode\nPress Left Mouse button to select a tile\nWhen selected, press Q, W or R to change the tile type\nPress S to save level\nESC to go back to menu", 10, 10, 20.f, BLACK);
     EndDrawing();
 }

@@ -328,7 +328,6 @@ int Scene::lua_SetComponent(lua_State* L)
 		if (scene->HasComponents<Position>(entity))
 		{
 			scene->RemoveComponent<Position>(entity);
-			//scene->StackDump(L);
 		}
 		
 		//CHECKA OM DET FINNS NÅGOT PÅ STACKEN

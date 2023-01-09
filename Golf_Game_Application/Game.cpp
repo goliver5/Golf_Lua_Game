@@ -9,7 +9,7 @@ Game::Game(lua_State* L, int* strokes)
     scene.lua_openscene(L, &scene);
     scene.addInputClassToRenderSystem(&inputClass);
     inputClass.setRegistry(scene.getRegistry());
-    if (luaL_dofile(L, "test.lua")) std::cout << "CREATE pLaYeR ERROR\n";
+    if (luaL_dofile(L, "initiatePlayer.lua")) std::cout << "CREATE pLaYeR ERROR\n";
     if (luaL_dofile(L, "createTileMap.lua")) std::cout << "CREATE TILE MAP ERROR\n";
 
     lua_getglobal(L, "CreateTileMap");

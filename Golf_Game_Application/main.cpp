@@ -47,6 +47,7 @@ void ConsoleThreadFunction(lua_State* L)
 
 int main()
 {
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	InitWindow(800, 480, "Golf Game");
 	lua_State* L = luaL_newstate();
 	luaL_openlibs(L);

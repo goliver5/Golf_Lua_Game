@@ -10,7 +10,7 @@ Menu::Menu(lua_State* L)
 	std::cout << "\n----------------------------\nLua console:\n\n";
 
 	scene.lua_openscene(L, &scene);
-	if (luaL_dofile(L, "test.lua")) std::cout << "WRONG\n";
+	if (luaL_dofile(L, "initiatePlayer.lua")) std::cout << "WRONG\n";
 	scene.addInputClassToRenderSystem(&inputClass);
 	inputClass.setRegistry(scene.getRegistry());
 

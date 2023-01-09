@@ -6,7 +6,6 @@
 #include "WallComponent.h"
 #include "HoleComponent.h"
 #include "TileComponent.h"
-#include "Scene.h"
 #include <string>
 #include "LuaExtraFunctions.h"
 
