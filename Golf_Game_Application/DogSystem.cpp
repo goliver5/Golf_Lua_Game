@@ -25,12 +25,14 @@ bool DogSystem::OnUpdate(entt::registry& registry, float delta)
     if (luaL_dofile(L, "dog.lua") != 0)
     {
         //dump error
-        std::cout << "error do file!\n";
+        std::cout << "error do file! DOG.LUA\n";
     }
-    else{
+    else {
         lua_getfield(L, -1, "update");
         lua_setfield(L, -3, "update");
         lua_pop(L, 1);
+    }
+
         lua_getfield(L, -1, "OnUpdate");
         lua_pushvalue(L, -2);
 
@@ -45,7 +47,7 @@ bool DogSystem::OnUpdate(entt::registry& registry, float delta)
         {
             DumpError(L);
         }
-    }
+        lua_pop(L, 1);
         }
     );
 

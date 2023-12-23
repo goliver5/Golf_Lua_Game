@@ -11,6 +11,6 @@ struct TestBehaviour
 		:luaRef(luaRef), tempId(temp)
 	{
 		memset(this->path, '\n', 64);
-		strcpy_s(this->path, 64, path);
+		strcpy_s(this->path, path);
 	}
 };
