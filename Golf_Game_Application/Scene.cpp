@@ -5,10 +5,13 @@
 #include "MoveScript.h"
 #include "CollisionComponent.h"
 #include "CollsionSystem.h"
+#include "TestBehaviour.h"
 #include "PlayerComponent.h"
 #include "WallComponent.h"
 #include "TileComponent.h"
 #include "HoleComponent.h"
+
+#include "DogSystem.h"
 
 Scene::Scene(lua_State* L)
 {
@@ -16,6 +19,7 @@ Scene::Scene(lua_State* L)
 	m_systems.push_back(new RightSystem(L));
 	
 	m_systems.push_back(new CollisionSystem(L));
+	m_systems.push_back(new DogSystem(L));
 
 	Texture2D tmp;
 	tmp = LoadTexture("../Sprites/ground.png");
@@ -238,6 +242,9 @@ int Scene::lua_HasComponent(lua_State* L)
 	int entity = lua_tointeger(L, 1);
 	std::string type = lua_tostring(L, 2);
 	bool hasComponent = false;
+	if (type == "behaviour") {
+		hasComponent = scene->HasComponents<TestBehaviour>(entity);
+	}
 	if (type == "position") 
 		hasComponent = scene->HasComponents<Position>(entity);
 	else if (type == "mesh") {
@@ -305,6 +312,36 @@ int Scene::lua_SetComponent(lua_State* L)
 	Scene* scene = lua_GetSceneUpValue(L);
 	int entity = (int)lua_tointeger(L, 1);
 	std::string type = lua_tostring(L, 2);
+	if (type == "behaviour")
+	{
+		if(scene->HasComponents<TestBehaviour>(entity)){
+			scene->RemoveComponent<TestBehaviour>(entity);
+		}
+		scene->lua_StackDump(L);
+		std::string path = lua_tostring(L, 3);// TODO: Change the path directory when the file structure is updated
+
+		const int luaRef = RefAndPushBehaviour(L, entity, path.c_str());
+
+		scene->lua_StackDump(L);
+
+		lua_pushinteger(L, entity);
+		lua_setfield(L, -2, "ID");
+
+		lua_getfield(L, -1, "OnCreate");
+		lua_pushvalue(L, -2);
+
+		if (lua_pcall(L, 1, 0, 0) != LUA_OK)
+		{
+			std::cout << "Error Behaviour!\n";
+		}
+		scene->lua_StackDump(L);
+		scene->SetComponent<TestBehaviour>(entity, path.c_str(), luaRef, entity);//
+		return 1;
+		//kör behaviour scriptet
+
+
+	}
+
 	if (type == "createPlayer")//creates player
 	{
 		if (scene->HasComponents<Position>(entity))
@@ -320,7 +357,6 @@ int Scene::lua_SetComponent(lua_State* L)
 		scene->SetComponent<Position>(entity, 100.f, 0.f);
 		return 1;
 	}
-
 
 	else if (type == "position")
 	{
@@ -495,6 +531,8 @@ int Scene::lua_RemoveComponent(lua_State* L)
 		scene->RemoveComponent<Position>(entity);
 	else if (type == "mesh")
 		scene->RemoveComponent<MeshComponent>(entity);
+	else if (type == "behaviour")
+		scene->RemoveComponent<TestBehaviour>(entity);
 	else if (type == "velocity")
 		scene->RemoveComponent<VelocityData>(entity);
 	else if (type == "moveScript")

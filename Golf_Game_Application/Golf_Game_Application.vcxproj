@@ -166,6 +166,7 @@
   <ItemGroup>
     <ClCompile Include="CollsionSystem.cpp" />
     <ClCompile Include="Credits.cpp" />
+    <ClCompile Include="DogSystem.cpp" />
     <ClCompile Include="Editor.cpp" />
     <ClCompile Include="EndScreen.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="CollisionComponent.h" />
     <ClInclude Include="CollsionSystem.h" />
     <ClInclude Include="Credits.h" />
+    <ClInclude Include="DogSystem.h" />
     <ClInclude Include="Editor.h" />
     <ClInclude Include="EndScreen.h" />
     <ClInclude Include="Game.h" />
@@ -194,6 +196,7 @@
     <ClInclude Include="PlayerComponent.h" />
     <ClInclude Include="Position.h" />
     <ClInclude Include="RenderSystem.h" />
+    <ClInclude Include="TestBehaviour.h" />
     <ClInclude Include="TileComponent.h" />
     <ClInclude Include="Tilemap.h" />
     <ClInclude Include="VelocityData.h" />
