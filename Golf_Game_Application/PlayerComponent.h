@@ -1,6 +1,7 @@
 #pragma once
+#include "base.h"
 
-struct PlayerComponent
+struct PlayerComponent : public base
 {
 	int playerID = 0;
 	float r;

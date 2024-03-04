@@ -1,13 +1,14 @@
 #pragma once
 #include <iostream>
+#include "base.h"
 
-struct MoveScript
+struct MoveScript : public base
 {
 	char ScriptPath[64];
 	int LuaTableRef;
 	int entity;
 
-	MoveScript(const char* path, int luaRef, int entity = 0)
+	MoveScript(const char* path = nullptr, int luaRef = 0, int entity = 0)
 		:LuaTableRef(luaRef), entity(entity)
 	{
 		memset(ScriptPath, '\0', sizeof(ScriptPath));

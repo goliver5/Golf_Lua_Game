@@ -10,6 +10,7 @@
 #include "WallComponent.h"
 #include "TileComponent.h"
 #include "HoleComponent.h"
+#include "GetType.h"
 
 #include "DogSystem.h"
 
@@ -242,35 +243,8 @@ int Scene::lua_HasComponent(lua_State* L)
 	int entity = lua_tointeger(L, 1);
 	std::string type = lua_tostring(L, 2);
 	bool hasComponent = false;
-	if (type == "behaviour") {
-		hasComponent = scene->HasComponents<TestBehaviour>(entity);
-	}
-	if (type == "position") 
-		hasComponent = scene->HasComponents<Position>(entity);
-	else if (type == "mesh") {
-		hasComponent =
-			scene->HasComponents<MeshComponent>(entity);
-	}
-	else if (type == "velocity") {
-		hasComponent =
-			scene->HasComponents<VelocityData>(entity);
-	}
-	else if (type == "moveScript") {
-		hasComponent =
-			scene->HasComponents<MoveScript>(entity);
-	}
-	else if (type == "playerComponent") {
-		hasComponent =
-			scene->HasComponents<PlayerComponent>(entity);
-	}
-	else if (type == "wall") {
-		hasComponent =
-			scene->HasComponents<WallComponent>(entity);
-	}
-	else if (type == "hole") {
-		hasComponent =
-			scene->HasComponents<HoleComponent>(entity);
-	}
+
+	hasComponent = scene->HasComponents<decltype(getType(type))>(entity);
 	lua_pushboolean(L, hasComponent);
 	return 1;
 }
@@ -337,7 +311,7 @@ int Scene::lua_SetComponent(lua_State* L)
 		scene->lua_StackDump(L);
 		scene->SetComponent<TestBehaviour>(entity, path.c_str(), luaRef, entity);//
 		return 1;
-		//kör behaviour scriptet
+		//kï¿½r behaviour scriptet
 
 
 	}
@@ -366,7 +340,7 @@ int Scene::lua_SetComponent(lua_State* L)
 			scene->RemoveComponent<Position>(entity);
 		}
 		
-		//CHECKA OM DET FINNS NÅGOT PÅ STACKEN
+		//CHECKA OM DET FINNS Nï¿½GOT Pï¿½ STACKEN
 		bool somethingOnStack = (3 <= lua_gettop(L));
 		if (somethingOnStack)
 		{
@@ -416,7 +390,7 @@ int Scene::lua_SetComponent(lua_State* L)
 		{
 			scene->RemoveComponent<VelocityData>(entity);
 		}
-		//CHECKA OM DET FINNS NÅGOT PÅ STACKEN
+		//CHECKA OM DET FINNS Nï¿½GOT Pï¿½ STACKEN
 		bool somethingOnStack = (3 <= lua_gettop(L));
 		if (somethingOnStack)
 		{
@@ -527,26 +501,8 @@ int Scene::lua_RemoveComponent(lua_State* L)
 	Scene* scene = lua_GetSceneUpValue(L);
 	int entity = lua_tointeger(L, 1);
 	std::string type = lua_tostring(L, 2);
-	if (type == "position")
-		scene->RemoveComponent<Position>(entity);
-	else if (type == "mesh")
-		scene->RemoveComponent<MeshComponent>(entity);
-	else if (type == "behaviour")
-		scene->RemoveComponent<TestBehaviour>(entity);
-	else if (type == "velocity")
-		scene->RemoveComponent<VelocityData>(entity);
-	else if (type == "moveScript")
-		scene->RemoveComponent<MoveScript>(entity);
-	else if (type == "collision")
-		scene->RemoveComponent<CollisionComponent>(entity);
-	else if (type == "playerComponent")
-		scene->RemoveComponent<PlayerComponent>(entity);
-	else if (type == "wall")
-		scene->RemoveComponent<WallComponent>(entity);
-	else if (type == "tile")
-		scene->RemoveComponent<TileComponent>(entity);
-	else if (type == "hole")
-		scene->RemoveComponent<HoleComponent>(entity);
+	
+	scene->RemoveComponent<decltype(getType(type))>(entity);
 		
 	return 0;
 }

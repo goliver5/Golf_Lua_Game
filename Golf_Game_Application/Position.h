@@ -1,10 +1,11 @@
 #pragma once
 #include "lua.hpp"
 #include <iostream>
+#include "base.h"
 
-struct Position
+
+struct Position : public base
 {
-
 	float posX;
 	float posY;
 
@@ -14,9 +15,8 @@ struct Position
 		this->posY = posY;
 
 	}
-
-	
 };
+
 
 static void lua_pushposition(lua_State* L, Position& position)
 {

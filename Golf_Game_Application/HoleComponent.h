@@ -1,6 +1,7 @@
 #pragma once
+#include "base.h"
 
-struct HoleComponent
+struct HoleComponent : public base
 {
 	int state;
 

@@ -134,5 +134,11 @@
     <ClInclude Include="DogSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="base.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GetType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

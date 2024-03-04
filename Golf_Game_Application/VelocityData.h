@@ -1,8 +1,10 @@
 #pragma once
 #include "lua.hpp"
 #include <iostream>
+#include "base.h"
 
-struct VelocityData
+
+struct VelocityData : public base
 {
 	float velocityX = 0;
 	float velocityY = 0;
